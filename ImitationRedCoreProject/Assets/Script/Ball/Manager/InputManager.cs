@@ -1,3 +1,4 @@
+using System;
 /*
  * @Author: l hy 
  * @Date: 2021-02-04 10:50:53 
@@ -11,7 +12,7 @@ public class InputManager : MonoBehaviour {
     private Vector2 touchMovePos = Vector2.zero;
     private Vector2 curMoveDir = Vector2.zero;
 
-    private void Update () {
+    public void localUpdate () {
         this.checkTouch ();
     }
 
