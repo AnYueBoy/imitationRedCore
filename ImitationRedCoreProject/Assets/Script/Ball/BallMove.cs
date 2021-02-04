@@ -6,16 +6,23 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UFrameWork.Application;
 using UnityEngine;
 
 public class BallMove : MonoBehaviour {
-    // Start is called before the first frame update
-    void Start () {
 
+    private readonly float moveSpeed = 1;
+
+    private Vector2 moveDir = Vector2.right;
+
+    void Start () { }
+
+    void Update () {
+        move ();
     }
 
-    // Update is called once per frame
-    void Update () {
-
+    private void move () {
+        moveDir = ApplicationManager.instance.inputManager.moveDir;
+        transform.Translate (new Vector3 (moveSpeed * moveDir.x * Time.deltaTime, 0, moveSpeed * moveDir.y * Time.deltaTime));
     }
 }
