@@ -14,8 +14,13 @@ namespace UFrameWork.Application {
 
         private GUIConsole guiConsole = new GUIConsole ();
 
+        public InputManager inputManager = null;
+
+        public static ApplicationManager instance = null;
+
         #region  程序生命周期函数
         private void Awake () {
+            instance = this;
             appLaunch ();
         }
 
