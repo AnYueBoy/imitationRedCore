@@ -15,8 +15,6 @@ public class BallMove : MonoBehaviour {
 
     private Vector2 moveDir = Vector2.right;
 
-    void Start () { }
-
     void Update () {
         move ();
     }
