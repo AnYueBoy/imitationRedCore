@@ -70,4 +70,16 @@ public class InputManager : MonoBehaviour {
             return this.curMoveDir.normalized;
         }
     }
+
+    public bool isTouch {
+        get {
+            return this.touchStartPos != Vector2.zero;
+        }
+    }
+
+    public Vector2 aimDir {
+        get {
+            return (this.touchMovePos - touchStartPos).normalized;
+        }
+    }
 }
