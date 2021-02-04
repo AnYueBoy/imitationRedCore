@@ -15,6 +15,7 @@ namespace UFrameWork.Application {
         private GUIConsole guiConsole = new GUIConsole ();
 
         public InputManager inputManager = null;
+        public CameraTrack cameraTrack = null;
 
         public static ApplicationManager instance = null;
 
@@ -24,14 +25,16 @@ namespace UFrameWork.Application {
             appLaunch ();
         }
 
-        private void gameStart () {
-            // 游戏逻辑初始化
-        }
-
         private void Update () {
             if (guiConsole != null) {
                 guiConsole.localUpdate ();
             }
+
+            inputManager.localUpdate ();
+        }
+
+        private void LateUpdate () {
+            this.cameraTrack.localLateUpdate ();
         }
 
         private void OnGUI () {
@@ -46,34 +49,13 @@ namespace UFrameWork.Application {
         }
         #endregion
 
-        #region 程序启动细节
-
         private void appLaunch () {
-            setResourceLoadType ();
-
             if (appMode != AppMode.Release) {
                 // 图形控制面板初始化
                 guiConsole.init ();
             }
 
-            // 热更
-            hotUpdate ();
+            // 初始化
         }
-
-        private void setResourceLoadType () {
-            // TODO: 资源加载方式
-        }
-
-        public void hotUpdate () {
-
-        }
-
-        public void hotUpdateCompleted () {
-            // TODO: bundle配置初始化
-            // TODO: uimanger初始化
-            gameStart ();
-
-        }
-        #endregion
     }
 }
