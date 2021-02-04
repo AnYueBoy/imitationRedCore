@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour {
 
     private Vector2 touchStartPos = Vector2.zero;
     private Vector2 touchMovePos = Vector2.zero;
+    private Vector2 curMoveDir = Vector2.zero;
 
     private void Update () {
         this.checkTouch ();
@@ -47,20 +48,26 @@ public class InputManager : MonoBehaviour {
         }
 
         this.touchMovePos = touch.position - touchStartPos;
-        this.touchStartPos = this.touchMovePos;
+        if (this.touchMovePos.magnitude < 0.2f) {
+            return;
+        }
+
+        this.touchMovePos = touch.position;
     }
 
     private void touchEnd () {
+        this.curMoveDir = this.touchMovePos - touchStartPos;
         this.touchStartPos = Vector2.zero;
     }
 
     private void touchCancel () {
+        this.curMoveDir = this.touchMovePos - touchStartPos;
         this.touchStartPos = Vector2.zero;
     }
 
     public Vector2 moveDir {
         get {
-            return this.touchMovePos.normalized;
+            return this.curMoveDir.normalized;
         }
     }
 }
