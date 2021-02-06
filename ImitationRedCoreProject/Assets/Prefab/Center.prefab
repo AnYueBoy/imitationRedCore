@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3163566084565151524}
   - component: {fileID: 4365526941815410493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Center
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 177f1970d07610c4bb49742ab81e3747,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 647381392491339332, guid: 177f1970d07610c4bb49742ab81e3747,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 177f1970d07610c4bb49742ab81e3747, type: 3}

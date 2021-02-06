@@ -290,5 +290,9 @@
                Vector3 endPos = startPos + direcition * distance;
                Debug.DrawLine (startPos, endPos, color);
            }
+
+           public static void drawLine (Vector3 startPos, Vector3 endPos, Color color) {
+               Debug.DrawLine (startPos, endPos, color);
+           }
        }
    }

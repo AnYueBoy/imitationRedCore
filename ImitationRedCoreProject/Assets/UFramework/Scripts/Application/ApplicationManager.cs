@@ -17,6 +17,8 @@ namespace UFrameWork.Application {
         public InputManager inputManager = null;
         public CameraTrack cameraTrack = null;
 
+        public BallManager ballManager = null;
+
         public static ApplicationManager instance = null;
 
         #region  程序生命周期函数

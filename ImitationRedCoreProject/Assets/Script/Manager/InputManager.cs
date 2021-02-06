@@ -4,12 +4,18 @@
  * @Description: 输入管理
  */
 
+using System.Collections.Generic;
+using UFramework.FrameUtil;
+using UFrameWork.Application;
 using UnityEngine;
 public class InputManager : MonoBehaviour {
 
-    private Vector2 touchStartPos = Vector2.zero;
-    private Vector2 touchMovePos = Vector2.zero;
-    private Vector2 curMoveDir = Vector2.zero;
+    private Vector3 touchStartPos = Vector3.zero;
+    private Vector3 touchMovePos = Vector3.zero;
+    private Vector3 curMoveDir = Vector3.zero;
+
+    // FIXME: 测试逻辑
+    public LayerMask layerMask;
 
     public void localUpdate () {
         this.checkTouch ();
@@ -39,33 +45,46 @@ public class InputManager : MonoBehaviour {
     }
 
     private void touchStart (Touch touch) {
-        this.touchStartPos = touch.position;
+        this.touchStartPos = new Vector3 (touch.position.x, 0, touch.position.y);
     }
 
     private void touchMove (Touch touch) {
-        if (this.touchStartPos == Vector2.zero) {
+        if (this.touchStartPos == Vector3.zero) {
             return;
         }
 
-        this.touchMovePos = touch.position - touchStartPos;
-        if (this.touchMovePos.magnitude < 0.2f) {
+        Vector3 moveEndPos = new Vector3 (touch.position.x, 0, touch.position.y);
+
+        Vector3 moveLimited = moveEndPos - touchStartPos;
+        if (moveLimited.magnitude < 0.2f) {
             return;
         }
 
-        this.touchMovePos = touch.position;
+        this.touchMovePos = moveEndPos;
+
+        List<Vector3> pathList = new List<Vector3> ();
+
+        // FIXME: 测试逻辑 
+        ApplicationManager.instance.ballManager.getReflectPath (this.aimDir, 15.0f, pathList, layerMask);
+        // FIXME: 测试逻辑
+        for (int i = 0; i < pathList.Count - 1; i++) {
+            Vector3 drawStartPos = pathList[i];
+            Vector3 drawEndPos = pathList[i + 1];
+            CommonUtil.drawLine (drawStartPos, drawEndPos, Color.red);
+        }
     }
 
     private void touchEnd () {
         this.curMoveDir = this.touchMovePos - touchStartPos;
-        this.touchStartPos = Vector2.zero;
+        this.touchStartPos = Vector3.zero;
     }
 
     private void touchCancel () {
         this.curMoveDir = this.touchMovePos - touchStartPos;
-        this.touchStartPos = Vector2.zero;
+        this.touchStartPos = Vector3.zero;
     }
 
-    public Vector2 moveDir {
+    public Vector3 moveDir {
         get {
             return this.curMoveDir.normalized;
         }
@@ -73,11 +92,11 @@ public class InputManager : MonoBehaviour {
 
     public bool isTouch {
         get {
-            return this.touchStartPos != Vector2.zero;
+            return this.touchStartPos != Vector3.zero;
         }
     }
 
-    public Vector2 aimDir {
+    public Vector3 aimDir {
         get {
             return (this.touchMovePos - touchStartPos).normalized;
         }
