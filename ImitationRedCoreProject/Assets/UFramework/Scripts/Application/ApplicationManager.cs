@@ -4,6 +4,7 @@
  * @Description: 程序入口
  */
 namespace UFrameWork.Application {
+    using UFramework.GameCommon;
     using UFrameWork.Develop;
     using UnityEngine;
 
@@ -19,6 +20,8 @@ namespace UFrameWork.Application {
 
         public BallManager ballManager = null;
 
+        public AssetsManager assetsManager = new AssetsManager ();
+
         public static ApplicationManager instance = null;
 
         #region  程序生命周期函数
@@ -33,6 +36,7 @@ namespace UFrameWork.Application {
             }
 
             inputManager.localUpdate ();
+            ballManager.localUpdate ();
         }
 
         private void LateUpdate () {
@@ -56,6 +60,8 @@ namespace UFrameWork.Application {
                 // 图形控制面板初始化
                 guiConsole.init ();
             }
+
+            ballManager.init ();
 
             // 初始化
         }
