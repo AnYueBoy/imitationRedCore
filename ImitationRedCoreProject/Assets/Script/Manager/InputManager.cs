@@ -47,7 +47,7 @@ public class InputManager : MonoBehaviour {
 
     private void touchStart (Touch touch) {
         this.touchStartPos = new Vector3 (touch.position.x, 0, touch.position.y);
-        this.outCircle.transform.position = this.touchStartPos;
+        this.outCircle.transform.position = new Vector3 (this.touchStartPos.x + Screen.width / 2, this.touchStartPos.y + Screen.height / 2, 0);
     }
 
     private void touchMove (Touch touch) {
@@ -58,27 +58,40 @@ public class InputManager : MonoBehaviour {
         Vector3 moveEndPos = new Vector3 (touch.position.x, 0, touch.position.y);
 
         Vector3 moveLimited = moveEndPos - touchStartPos;
-        if (moveLimited.magnitude < 0.2f) {
+        if (moveLimited.magnitude < ConstValue.moveMinDis) {
             return;
         }
 
         this.touchMovePos = moveEndPos;
 
+        Vector3 outCircleEndPos = Vector3.zero;
         if (moveLimited.magnitude > ConstValue.joyStickMaxDis) {
-            this.outCircle.transform.position = moveLimited.normalized * ConstValue.joyStickMaxDis;
+            outCircleEndPos = moveLimited.normalized * ConstValue.joyStickMaxDis;
         } else {
-            this.outCircle.transform.position = moveLimited;
+            outCircleEndPos = moveLimited;
         }
+
+        this.outCircle.transform.position = new Vector3 (outCircleEndPos.x + Screen.width / 2, outCircleEndPos.y + Screen.height / 2, 0);
     }
 
     private void touchEnd () {
-        this.curMoveDir = this.touchMovePos - touchStartPos;
+        Vector3 moveLimited = this.touchMovePos - touchStartPos;
+        if (moveLimited.magnitude < ConstValue.moveMinDis) {
+            this.curMoveDir = Vector3.zero;
+        } else {
+            this.curMoveDir = moveLimited;
+        }
         this.touchStartPos = Vector3.zero;
         this.outCircle.transform.position = Vector3.zero;
     }
 
     private void touchCancel () {
-        this.curMoveDir = this.touchMovePos - touchStartPos;
+        Vector3 moveLimited = this.touchMovePos - touchStartPos;
+        if (moveLimited.magnitude < ConstValue.moveMinDis) {
+            this.curMoveDir = Vector3.zero;
+        } else {
+            this.curMoveDir = moveLimited;
+        }
         this.touchStartPos = Vector3.zero;
         this.outCircle.transform.position = Vector3.zero;
     }
