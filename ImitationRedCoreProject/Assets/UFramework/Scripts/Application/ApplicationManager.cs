@@ -61,6 +61,8 @@ namespace UFrameWork.Application {
                 guiConsole.init ();
             }
 
+            inputManager.init ();
+
             ballManager.init ();
 
             // 初始化

@@ -18,6 +18,13 @@ public class InputManager : MonoBehaviour {
     private Vector3 touchMovePos = Vector3.zero;
     private Vector3 curMoveDir = Vector3.zero;
 
+    private Vector2 ratio = Vector2.zero;
+
+    public void init () {
+        this.ratio.x = 640 / Screen.width;
+        this.ratio.y = 1136 / Screen.height;
+    }
+
     public void localUpdate () {
         this.checkTouch ();
     }
@@ -47,7 +54,10 @@ public class InputManager : MonoBehaviour {
 
     private void touchStart (Touch touch) {
         this.touchStartPos = new Vector3 (touch.position.x, 0, touch.position.y);
-        this.outCircle.transform.position = new Vector3 (this.touchStartPos.x + Screen.width / 2, this.touchStartPos.y + Screen.height / 2, 0);
+
+        // 环坐标设置
+        Vector2 circlePos = new Vector2 (this.touchStartPos.x - Screen.width / 2, this.touchStartPos.z - Screen.height / 2);
+        this.outCircle.rectTransform.localPosition = new Vector2 (circlePos.x * ratio.x, circlePos.y * ratio.y);
     }
 
     private void touchMove (Touch touch) {
@@ -64,14 +74,14 @@ public class InputManager : MonoBehaviour {
 
         this.touchMovePos = moveEndPos;
 
-        Vector3 outCircleEndPos = Vector3.zero;
+        Vector3 inSideCircleEndPos = Vector3.zero;
         if (moveLimited.magnitude > ConstValue.joyStickMaxDis) {
-            outCircleEndPos = moveLimited.normalized * ConstValue.joyStickMaxDis;
+            inSideCircleEndPos = moveLimited.normalized * ConstValue.joyStickMaxDis;
         } else {
-            outCircleEndPos = moveLimited;
+            inSideCircleEndPos = moveLimited;
         }
 
-        this.outCircle.transform.position = new Vector3 (outCircleEndPos.x + Screen.width / 2, outCircleEndPos.y + Screen.height / 2, 0);
+        this.insideCircle.rectTransform.localPosition = new Vector2 (inSideCircleEndPos.x - Screen.width / 2, inSideCircleEndPos.z + Screen.height / 2);
     }
 
     private void touchEnd () {
@@ -82,7 +92,9 @@ public class InputManager : MonoBehaviour {
             this.curMoveDir = moveLimited;
         }
         this.touchStartPos = Vector3.zero;
-        this.outCircle.transform.position = Vector3.zero;
+
+        this.outCircle.rectTransform.localPosition = Vector2.zero;
+        this.insideCircle.rectTransform.localPosition = Vector2.zero;
     }
 
     private void touchCancel () {
@@ -93,7 +105,9 @@ public class InputManager : MonoBehaviour {
             this.curMoveDir = moveLimited;
         }
         this.touchStartPos = Vector3.zero;
-        this.outCircle.transform.position = Vector3.zero;
+
+        this.outCircle.rectTransform.localPosition = Vector2.zero;
+        this.insideCircle.rectTransform.localPosition = Vector2.zero;
     }
 
     public Vector3 moveDir {
