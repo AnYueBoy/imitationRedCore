@@ -6,7 +6,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using UFramework.FrameUtil;
 using UFrameWork.Application;
 using UnityEngine;
 
@@ -14,9 +13,6 @@ public class BallManager : MonoBehaviour {
 
     [Header ("行进路径检测点")]
     public Transform travelPoint = null;
-
-    [Header ("瞄准线检测点")]
-    public Transform aimPoint = null;
 
     public LayerMask layerMask;
 
