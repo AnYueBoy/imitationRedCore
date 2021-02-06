@@ -4,12 +4,13 @@
  * @Description: 输入管理
  */
 
+using System.Collections.Generic;
 using UnityEngine;
 public class InputManager : MonoBehaviour {
 
-    private Vector2 touchStartPos = Vector2.zero;
-    private Vector2 touchMovePos = Vector2.zero;
-    private Vector2 curMoveDir = Vector2.zero;
+    private Vector3 touchStartPos = Vector3.zero;
+    private Vector3 touchMovePos = Vector3.zero;
+    private Vector3 curMoveDir = Vector3.zero;
 
     public void localUpdate () {
         this.checkTouch ();
@@ -39,33 +40,35 @@ public class InputManager : MonoBehaviour {
     }
 
     private void touchStart (Touch touch) {
-        this.touchStartPos = touch.position;
+        this.touchStartPos = new Vector3 (touch.position.x, 0, touch.position.y);
     }
 
     private void touchMove (Touch touch) {
-        if (this.touchStartPos == Vector2.zero) {
+        if (this.touchStartPos == Vector3.zero) {
             return;
         }
 
-        this.touchMovePos = touch.position - touchStartPos;
-        if (this.touchMovePos.magnitude < 0.2f) {
+        Vector3 moveEndPos = new Vector3 (touch.position.x, 0, touch.position.y);
+
+        Vector3 moveLimited = moveEndPos - touchStartPos;
+        if (moveLimited.magnitude < 0.2f) {
             return;
         }
 
-        this.touchMovePos = touch.position;
+        this.touchMovePos = moveEndPos;
     }
 
     private void touchEnd () {
         this.curMoveDir = this.touchMovePos - touchStartPos;
-        this.touchStartPos = Vector2.zero;
+        this.touchStartPos = Vector3.zero;
     }
 
     private void touchCancel () {
         this.curMoveDir = this.touchMovePos - touchStartPos;
-        this.touchStartPos = Vector2.zero;
+        this.touchStartPos = Vector3.zero;
     }
 
-    public Vector2 moveDir {
+    public Vector3 moveDir {
         get {
             return this.curMoveDir.normalized;
         }
@@ -73,11 +76,11 @@ public class InputManager : MonoBehaviour {
 
     public bool isTouch {
         get {
-            return this.touchStartPos != Vector2.zero;
+            return this.touchStartPos != Vector3.zero;
         }
     }
 
-    public Vector2 aimDir {
+    public Vector3 aimDir {
         get {
             return (this.touchMovePos - touchStartPos).normalized;
         }
