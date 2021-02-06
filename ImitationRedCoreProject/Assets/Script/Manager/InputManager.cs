@@ -6,7 +6,13 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class InputManager : MonoBehaviour {
+    [Header ("外环")]
+    public Image outCircle = null;
+
+    [Header ("内环")]
+    public Image insideCircle = null;
 
     private Vector3 touchStartPos = Vector3.zero;
     private Vector3 touchMovePos = Vector3.zero;
@@ -41,6 +47,7 @@ public class InputManager : MonoBehaviour {
 
     private void touchStart (Touch touch) {
         this.touchStartPos = new Vector3 (touch.position.x, 0, touch.position.y);
+        this.outCircle.transform.position = this.touchStartPos;
     }
 
     private void touchMove (Touch touch) {
@@ -56,16 +63,24 @@ public class InputManager : MonoBehaviour {
         }
 
         this.touchMovePos = moveEndPos;
+
+        if (moveLimited.magnitude > ConstValue.joyStickMaxDis) {
+            this.outCircle.transform.position = moveLimited.normalized * ConstValue.joyStickMaxDis;
+        } else {
+            this.outCircle.transform.position = moveLimited;
+        }
     }
 
     private void touchEnd () {
         this.curMoveDir = this.touchMovePos - touchStartPos;
         this.touchStartPos = Vector3.zero;
+        this.outCircle.transform.position = Vector3.zero;
     }
 
     private void touchCancel () {
         this.curMoveDir = this.touchMovePos - touchStartPos;
         this.touchStartPos = Vector3.zero;
+        this.outCircle.transform.position = Vector3.zero;
     }
 
     public Vector3 moveDir {
