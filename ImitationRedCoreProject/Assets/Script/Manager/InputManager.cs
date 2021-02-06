@@ -5,17 +5,12 @@
  */
 
 using System.Collections.Generic;
-using UFramework.FrameUtil;
-using UFrameWork.Application;
 using UnityEngine;
 public class InputManager : MonoBehaviour {
 
     private Vector3 touchStartPos = Vector3.zero;
     private Vector3 touchMovePos = Vector3.zero;
     private Vector3 curMoveDir = Vector3.zero;
-
-    // FIXME: 测试逻辑
-    public LayerMask layerMask;
 
     public void localUpdate () {
         this.checkTouch ();
@@ -61,17 +56,6 @@ public class InputManager : MonoBehaviour {
         }
 
         this.touchMovePos = moveEndPos;
-
-        List<Vector3> pathList = new List<Vector3> ();
-
-        // FIXME: 测试逻辑 
-        ApplicationManager.instance.ballManager.getReflectPath (this.aimDir, 15.0f, pathList, layerMask);
-        // FIXME: 测试逻辑
-        for (int i = 0; i < pathList.Count - 1; i++) {
-            Vector3 drawStartPos = pathList[i];
-            Vector3 drawEndPos = pathList[i + 1];
-            CommonUtil.drawLine (drawStartPos, drawEndPos, Color.red);
-        }
     }
 
     private void touchEnd () {

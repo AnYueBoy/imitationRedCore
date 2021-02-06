@@ -36,10 +36,9 @@ public class BallManager : MonoBehaviour {
         transform.Translate (moveDir * moveSpeed * Time.deltaTime);
     }
 
-    private readonly float rayDistance = 15.0f;
-
     public void getReflectPath (Vector3 moveDir, float reflectDistance, List<Vector3> pathList, LayerMask layerMask) {
         Vector3 startPos = this.travelPoint.position;
+        pathList.Add (startPos);
         while (reflectDistance > 0) {
             RaycastHit raycastHit;
             if (!Physics.Raycast (startPos, moveDir, out raycastHit, reflectDistance, layerMask)) {
