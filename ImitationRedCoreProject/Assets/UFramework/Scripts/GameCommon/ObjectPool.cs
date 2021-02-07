@@ -11,18 +11,20 @@ namespace UFramework.GameCommon {
     using UnityEngine;
     public class ObjectPool {
 
-        private static ObjectPool instance = null;
+        private static ObjectPool _instance = null;
 
         private Dictionary<GameObject, List<GameObject>> pool = new Dictionary<GameObject, List<GameObject>> ();
 
         // 存放预制与实例的关系
         private Dictionary<GameObject, GameObject> relationShip = new Dictionary<GameObject, GameObject> ();
 
-        public static ObjectPool getInstance () {
-            if (instance == null) {
-                instance = new ObjectPool ();
+        public static ObjectPool instance {
+            get {
+                if (_instance == null) {
+                    _instance = new ObjectPool ();
+                }
+                return _instance;
             }
-            return instance;
         }
 
         public GameObject requestInstance (GameObject prefab) {

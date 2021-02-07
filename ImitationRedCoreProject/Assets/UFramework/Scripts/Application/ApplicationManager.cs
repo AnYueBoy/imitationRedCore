@@ -15,12 +15,9 @@ namespace UFrameWork.Application {
 
         private GUIConsole guiConsole = new GUIConsole ();
 
-        public InputManager inputManager = null;
         public CameraTrack cameraTrack = null;
 
         public BallManager ballManager = null;
-
-        public AssetsManager assetsManager = new AssetsManager ();
 
         public static ApplicationManager instance = null;
 
@@ -35,7 +32,7 @@ namespace UFrameWork.Application {
                 guiConsole.localUpdate ();
             }
 
-            inputManager.localUpdate ();
+            InputManager.instance.localUpdate ();
             ballManager.localUpdate ();
         }
 
@@ -61,7 +58,7 @@ namespace UFrameWork.Application {
                 guiConsole.init ();
             }
 
-            inputManager.init ();
+            InputManager.instance.init ();
 
             ballManager.init ();
 

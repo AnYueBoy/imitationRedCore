@@ -21,6 +21,17 @@ public class InputManager : MonoBehaviour {
     private float halfScreenWidth = 0;
     private float halfScreenHeight = 0;
 
+    private static InputManager _instance = null;
+
+    private void Awake () {
+        _instance = this;
+    }
+    public static InputManager instance {
+        get {
+            return _instance;
+        }
+    }
+
     public void init () {
         this.halfScreenWidth = Screen.width / 2;
         this.halfScreenHeight = Screen.height / 2;

@@ -16,6 +16,17 @@ namespace UFramework.GameCommon {
 
         private Dictionary<string, PackAsset> assetPool = new Dictionary<string, PackAsset> ();
 
+        private static AssetsManager _instance;
+        public static AssetsManager instance {
+            get {
+                if (_instance == null) {
+                    _instance = new AssetsManager ();
+                }
+
+                return _instance;
+            }
+        }
+
         /// <summary>
         /// 获取指定资源
         /// </summary>
