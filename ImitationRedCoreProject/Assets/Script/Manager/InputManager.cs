@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour {
 
     private void Awake () {
         _instance = this;
+        this.init ();
     }
     public static InputManager instance {
         get {

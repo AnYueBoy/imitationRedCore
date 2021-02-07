@@ -18,9 +18,7 @@ public class BallManager : MonoBehaviour {
     /* 路径点 */
     private List<Vector3> pathList = new List<Vector3> ();
 
-    private readonly float moveSpeed = 10;
-
-    private Vector3 moveDir = Vector3.zero;
+    private readonly float moveSpeed = 1;
 
     private Ball currentBall = null;
 
@@ -32,16 +30,40 @@ public class BallManager : MonoBehaviour {
         currentBall = ballNode.GetComponent<Ball> ();
     }
 
+    private Vector3 preMoveDir = Vector3.zero;
+
     public void localUpdate () {
+        if (InputManager.instance.isTouch && InputManager.instance.moveDir != preMoveDir) {
+            this.preMoveDir = InputManager.instance.moveDir;
+            this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.pathList, this.layerMask);
+            this.pointIndex = 1;
+        }
         move ();
     }
 
+    private int pointIndex = 1;
     private void move () {
-        moveDir = InputManager.instance.moveDir;
-        currentBall.transform.Translate (moveDir * moveSpeed * Time.deltaTime);
+        if (pointIndex >= this.pathList.Count) {
+            return;
+        }
+        Vector3 targetPos = this.pathList[pointIndex];
+        Vector3 targetVec = targetPos - currentBall.transform.position;
+        Vector3 targetDir = targetVec.normalized;
+
+        if (targetVec.magnitude < 10) {
+            pointIndex++;
+            if (pointIndex >= this.pathList.Count) {
+                // 重新产生路径
+                this.getReflectPath (targetDir, ConstValue.reflectDis, this.pathList, this.layerMask);
+                this.pointIndex = 1;
+            }
+        }
+
+        currentBall.transform.Translate (targetDir * moveSpeed * Time.deltaTime);
     }
 
     private void getReflectPath (Vector3 moveDir, float reflectDistance, List<Vector3> pathList, LayerMask layerMask) {
+        pathList.Clear ();
         Vector3 startPos = currentBall.transform.position;
         pathList.Add (startPos);
         while (reflectDistance > 0) {

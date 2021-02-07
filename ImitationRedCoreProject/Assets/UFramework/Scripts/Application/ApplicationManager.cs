@@ -4,7 +4,6 @@
  * @Description: 程序入口
  */
 namespace UFrameWork.Application {
-    using UFramework.GameCommon;
     using UFrameWork.Develop;
     using UnityEngine;
 
@@ -19,11 +18,8 @@ namespace UFrameWork.Application {
 
         public BallManager ballManager = null;
 
-        public static ApplicationManager instance = null;
-
         #region  程序生命周期函数
         private void Awake () {
-            instance = this;
             appLaunch ();
         }
 
@@ -58,7 +54,7 @@ namespace UFrameWork.Application {
                 guiConsole.init ();
             }
 
-            InputManager.instance.init ();
+            // InputManager.instance.init ();
 
             ballManager.init ();
 
