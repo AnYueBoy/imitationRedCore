@@ -54,6 +54,8 @@ public class InputManager : MonoBehaviour {
     }
 
     private void touchStart (Touch touch) {
+        this.outCircle.gameObject.SetActive (true);
+
         this.touchStartPos = touch.position;
 
         // 环坐标设置
@@ -68,12 +70,8 @@ public class InputManager : MonoBehaviour {
 
         Vector2 touchMoveVec = touch.position - touchStartPos;
         float touchMoveDis = touchMoveVec.magnitude;
-        if (touchMoveDis < ConstValue.moveMinDis) {
-            return;
-        }
 
-        this.touchEndPos = touch.position;
-
+        // 圆环ui显示相关
         Vector2 insideCircleEndPos = Vector2.zero;
         if (touchMoveDis > ConstValue.joyStickMaxDis) {
             insideCircleEndPos = touchMoveVec.normalized * ConstValue.joyStickMaxDis;
@@ -82,6 +80,14 @@ public class InputManager : MonoBehaviour {
         }
 
         this.insideCircle.rectTransform.localPosition = insideCircleEndPos;
+
+        // 实际操作相关
+        if (touchMoveDis < ConstValue.moveMinDis) {
+            return;
+        }
+
+        this.touchEndPos = touch.position;
+
     }
 
     private void touchEnd () {
@@ -94,8 +100,8 @@ public class InputManager : MonoBehaviour {
         }
 
         this.touchStartPos = Vector2.zero;
-        this.outCircle.rectTransform.localPosition = Vector2.zero;
         this.insideCircle.rectTransform.localPosition = Vector2.zero;
+        this.outCircle.gameObject.SetActive (false);
     }
 
     private void touchCancel () {
@@ -108,8 +114,8 @@ public class InputManager : MonoBehaviour {
         }
 
         this.touchStartPos = Vector2.zero;
-        this.outCircle.rectTransform.localPosition = Vector2.zero;
         this.insideCircle.rectTransform.localPosition = Vector2.zero;
+        this.outCircle.gameObject.SetActive (false);
     }
 
     public Vector3 moveDir {
