@@ -5,7 +5,7 @@
  */
 public class ConstValue {
 
-    public const float joyStickMaxDis = 100.0f;
+    public const float joyStickMaxDis = 180.0f;
 
-    public const float moveMinDis = 1205f;
+    public const float moveMinDis = 100f;
 }

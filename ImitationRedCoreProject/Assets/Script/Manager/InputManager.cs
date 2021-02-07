@@ -14,15 +14,16 @@ public class InputManager : MonoBehaviour {
     [Header ("内环")]
     public Image insideCircle = null;
 
-    private Vector3 touchStartPos = Vector3.zero;
-    private Vector3 touchMovePos = Vector3.zero;
-    private Vector3 curMoveDir = Vector3.zero;
+    private Vector2 touchStartPos = Vector2.zero;
+    private Vector2 touchEndPos = Vector2.zero;
+    private Vector2 curMoveDir = Vector2.zero;
 
-    private Vector2 ratio = Vector2.zero;
+    private float halfScreenWidth = 0;
+    private float halfScreenHeight = 0;
 
     public void init () {
-        this.ratio.x = 640 / Screen.width;
-        this.ratio.y = 1136 / Screen.height;
+        this.halfScreenWidth = Screen.width / 2;
+        this.halfScreenHeight = Screen.height / 2;
     }
 
     public void localUpdate () {
@@ -53,78 +54,74 @@ public class InputManager : MonoBehaviour {
     }
 
     private void touchStart (Touch touch) {
-        this.touchStartPos = new Vector3 (touch.position.x, 0, touch.position.y);
+        this.touchStartPos = touch.position;
 
         // 环坐标设置
-        Vector2 circlePos = new Vector2 (this.touchStartPos.x - Screen.width / 2, this.touchStartPos.z - Screen.height / 2);
-        this.outCircle.rectTransform.localPosition = new Vector2 (circlePos.x * ratio.x, circlePos.y * ratio.y);
+        Vector2 circlePos = new Vector2 (this.touchStartPos.x - halfScreenWidth, this.touchStartPos.y - halfScreenHeight);
+        this.outCircle.rectTransform.localPosition = circlePos;
     }
 
     private void touchMove (Touch touch) {
-        if (this.touchStartPos == Vector3.zero) {
+        if (this.touchStartPos == Vector2.zero) {
             return;
         }
 
-        Vector3 moveEndPos = new Vector3 (touch.position.x, 0, touch.position.y);
-
-        Vector3 moveLimited = moveEndPos - touchStartPos;
-        if (moveLimited.magnitude < ConstValue.moveMinDis) {
+        Vector2 touchMoveVec = touch.position - touchStartPos;
+        float touchMoveDis = touchMoveVec.magnitude;
+        if (touchMoveDis < ConstValue.moveMinDis) {
             return;
         }
 
-        this.touchMovePos = moveEndPos;
+        this.touchEndPos = touch.position;
 
-        Vector3 inSideCircleEndPos = Vector3.zero;
-        if (moveLimited.magnitude > ConstValue.joyStickMaxDis) {
-            inSideCircleEndPos = moveLimited.normalized * ConstValue.joyStickMaxDis;
+        Vector2 insideCircleEndPos = Vector2.zero;
+        if (touchMoveDis > ConstValue.joyStickMaxDis) {
+            insideCircleEndPos = touchMoveVec.normalized * ConstValue.joyStickMaxDis;
         } else {
-            inSideCircleEndPos = moveLimited;
+            insideCircleEndPos = touchMoveVec.normalized * touchMoveDis;
         }
 
-        this.insideCircle.rectTransform.localPosition = new Vector2 (inSideCircleEndPos.x - Screen.width / 2, inSideCircleEndPos.z + Screen.height / 2);
+        this.insideCircle.rectTransform.localPosition = insideCircleEndPos;
     }
 
     private void touchEnd () {
-        Vector3 moveLimited = this.touchMovePos - touchStartPos;
-        if (moveLimited.magnitude < ConstValue.moveMinDis) {
-            this.curMoveDir = Vector3.zero;
+        Vector2 touchMoveVec = this.touchEndPos - touchStartPos;
+        float touchMoveDis = touchMoveVec.magnitude;
+        if (touchMoveDis < ConstValue.moveMinDis) {
+            this.curMoveDir = Vector2.zero;
         } else {
-            this.curMoveDir = moveLimited;
+            this.curMoveDir = touchMoveVec;
         }
-        this.touchStartPos = Vector3.zero;
 
+        this.touchStartPos = Vector2.zero;
         this.outCircle.rectTransform.localPosition = Vector2.zero;
         this.insideCircle.rectTransform.localPosition = Vector2.zero;
     }
 
     private void touchCancel () {
-        Vector3 moveLimited = this.touchMovePos - touchStartPos;
-        if (moveLimited.magnitude < ConstValue.moveMinDis) {
-            this.curMoveDir = Vector3.zero;
+        Vector2 touchMoveVec = this.touchEndPos - touchStartPos;
+        float touchMoveDis = touchMoveVec.magnitude;
+        if (touchMoveDis < ConstValue.moveMinDis) {
+            this.curMoveDir = Vector2.zero;
         } else {
-            this.curMoveDir = moveLimited;
+            this.curMoveDir = touchMoveVec;
         }
-        this.touchStartPos = Vector3.zero;
 
+        this.touchStartPos = Vector2.zero;
         this.outCircle.rectTransform.localPosition = Vector2.zero;
         this.insideCircle.rectTransform.localPosition = Vector2.zero;
     }
 
     public Vector3 moveDir {
         get {
-            return this.curMoveDir.normalized;
+            Vector3 moveDir = new Vector3 (this.curMoveDir.x, 0, this.curMoveDir.y);
+            return moveDir.normalized;
         }
     }
 
     public bool isTouch {
         get {
-            return this.touchStartPos != Vector3.zero;
-        }
-    }
-
-    public Vector3 aimDir {
-        get {
-            return (this.touchMovePos - touchStartPos).normalized;
+            return this.touchStartPos != Vector2.zero;
         }
     }
 }
