@@ -20,7 +20,8 @@ public class BallManager : MonoBehaviour {
 
     private readonly float moveSpeed = 1;
 
-    private Ball currentBall = null;
+    [HideInInspector]
+    public Ball currentBall = null;
 
     public void init () {
         GameObject ballPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.ballUrl);

@@ -7,22 +7,29 @@
 using UnityEngine;
 public class CameraTrack : MonoBehaviour {
 
-    // FIXME: 临时
-    public Transform targetTrans = null;
+    private Transform targetTrans = null;
 
     private Vector3 offset = Vector3.zero;
 
     private readonly float trackSpeed = 5.0f;
 
-    public void init (Transform targetTrans, Vector3 cameraPos) {
-        this.targetTrans = targetTrans;
-        this.transform.position = cameraPos;
-        offset = this.transform.position - this.targetTrans.position;
+    private static CameraTrack _instance = null;
+
+    private void Awake () {
+        _instance = this;
     }
 
-    private void Start() {
-        // 临时，带删除
-        offset = this.transform.position - this.targetTrans.position; 
+    public static CameraTrack instance {
+        get {
+            return _instance;
+        }
+    }
+
+    public void init (Transform targetTrans, Vector3 cameraPos) {
+        this.targetTrans = targetTrans;
+        // FIXME: 等待修改
+        // this.transform.position = cameraPos;
+        offset = this.transform.position - this.targetTrans.position;
     }
 
     public void localLateUpdate () {

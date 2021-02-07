@@ -9,7 +9,6 @@ namespace UFrameWork.Application {
 
     public class ApplicationManager : MonoBehaviour {
 
-        [Header ("当前程序模式")]
         public AppMode appMode = AppMode.Developing;
 
         private GUIConsole guiConsole = new GUIConsole ();
@@ -19,7 +18,8 @@ namespace UFrameWork.Application {
         public BallManager ballManager = null;
 
         #region  程序生命周期函数
-        private void Awake () {
+
+        private void Start () {
             appLaunch ();
         }
 
@@ -54,10 +54,11 @@ namespace UFrameWork.Application {
                 guiConsole.init ();
             }
 
-            // InputManager.instance.init ();
+            InputManager.instance.init ();
 
             ballManager.init ();
 
+            CameraTrack.instance.init (ballManager.currentBall.transform, Vector3.zero);
             // 初始化
         }
     }
