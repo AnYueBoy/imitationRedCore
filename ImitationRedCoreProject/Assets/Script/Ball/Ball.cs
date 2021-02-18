@@ -12,4 +12,6 @@ public class Ball : MonoBehaviour {
             return this.transform;
         }
     }
+
+    public Transform arrowTransform = null;
 }

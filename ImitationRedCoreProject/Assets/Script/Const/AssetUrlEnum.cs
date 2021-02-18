@@ -7,4 +7,6 @@
 public class AssetUrlEnum {
 
     public const string ballUrl = "Ball";
+
+    public const string arrowUrl = "Arrow";
 }

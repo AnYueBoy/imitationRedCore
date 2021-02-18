@@ -67,6 +67,38 @@ public class BallManager : MonoBehaviour {
 
             this.lineRenderer.positionCount = this.generatePathList.Count;
             this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
+
+            // 产生箭头
+            this.generateArrow ();
+        }
+    }
+
+    private void generateArrow () {
+        for (int i = 0; i < this.generatePathList.Count - 1; i++) {
+            Vector3 startPathPos = this.generatePathList[i];
+            Vector3 nextPathPos = this.generatePathList[i + 1];
+
+            GameObject arrowPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
+
+            Vector3 diffVec = nextPathPos - startPathPos;
+            float totalDis = diffVec.magnitude;
+            Vector3 arrowDir = diffVec.normalized;
+            int intervalIndex = 0;
+
+            while (totalDis > 0) {
+                Vector3 endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
+                if (totalDis < ConstValue.arrowInterval) {
+                    endPos = startPathPos + arrowDir * (intervalIndex * (ConstValue.arrowInterval - 1) + totalDis);
+                }
+                intervalIndex++;
+                totalDis -= ConstValue.arrowInterval;
+                GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
+                float angle = Vector3.Angle (Vector3.right, endPos);
+
+                arrowNode.transform.parent = currentBall.arrowTransform;
+                arrowNode.transform.position = endPos;
+                arrowNode.transform.eulerAngles = new Vector3 (0, 0, angle);
+            }
         }
     }
 
