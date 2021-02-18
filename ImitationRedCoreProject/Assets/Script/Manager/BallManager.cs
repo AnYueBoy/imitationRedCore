@@ -71,7 +71,7 @@ public class BallManager : MonoBehaviour {
             this.recycleArrow ();
 
             // 产生箭头
-            this.generateArrow ();
+            // this.generateArrow ();
         }
     }
 
@@ -82,11 +82,10 @@ public class BallManager : MonoBehaviour {
     }
 
     private void generateArrow () {
+        GameObject arrowPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
         for (int i = 0; i < this.generatePathList.Count - 1; i++) {
             Vector3 startPathPos = this.generatePathList[i];
             Vector3 nextPathPos = this.generatePathList[i + 1];
-
-            GameObject arrowPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
 
             Vector3 diffVec = nextPathPos - startPathPos;
             float totalDis = diffVec.magnitude;
@@ -102,7 +101,7 @@ public class BallManager : MonoBehaviour {
                 totalDis -= ConstValue.arrowInterval;
                 GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
                 this.arrowNodeList.Add (arrowNode);
-                float angle = Vector3.Angle (Vector3.right, arrowDir);
+                float angle = Vector3.SignedAngle (Vector3.forward, arrowDir, Vector3.forward);
 
                 arrowNode.transform.parent = currentBall.arrowTransform;
                 arrowNode.transform.position = endPos;

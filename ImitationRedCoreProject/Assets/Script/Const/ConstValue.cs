@@ -18,6 +18,6 @@ public class ConstValue {
     public const float arrowInterval = 0.5f;
 
     /* 小球移动速度 */
-    public const float ballMoveSpeed = 3f;
+    public const float ballMoveSpeed = 0f;
 
 }
