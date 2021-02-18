@@ -21,8 +21,6 @@ public class BallManager : MonoBehaviour {
     /* 产生的路径点 */
     private List<Vector3> generatePathList = new List<Vector3> ();
 
-    private readonly float moveSpeed = 1;
-
     [HideInInspector]
     public Ball currentBall = null;
 
@@ -104,11 +102,11 @@ public class BallManager : MonoBehaviour {
                 totalDis -= ConstValue.arrowInterval;
                 GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
                 this.arrowNodeList.Add (arrowNode);
-                float angle = Vector3.Angle (Vector3.right, endPos);
+                float angle = Vector3.Angle (Vector3.right, arrowDir);
 
                 arrowNode.transform.parent = currentBall.arrowTransform;
                 arrowNode.transform.position = endPos;
-                arrowNode.transform.eulerAngles = new Vector3 (0, 0, angle);
+                arrowNode.transform.localEulerAngles = new Vector3 (0, 0, angle);
             }
         }
     }
@@ -132,13 +130,12 @@ public class BallManager : MonoBehaviour {
             pointIndex++;
             if (pointIndex >= this.curPathList.Count) {
                 // 重新产生路径
-                Debug.Log ("ReGenerate Points");
                 this.getReflectPath (targetDir, ConstValue.reflectDis, this.curPathList, this.layerMask);
                 this.pointIndex = 1;
             }
         }
 
-        currentBall.transform.Translate (targetDir * moveSpeed * dt);
+        currentBall.transform.Translate (targetDir * ConstValue.ballMoveSpeed * dt);
     }
 
     private void getReflectPath (Vector3 moveDir, float reflectDistance, List<Vector3> pathList, LayerMask layerMask) {

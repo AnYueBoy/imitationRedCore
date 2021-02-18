@@ -17,4 +17,7 @@ public class ConstValue {
     /* 箭头间距 */
     public const float arrowInterval = 0.5f;
 
+    /* 小球移动速度 */
+    public const float ballMoveSpeed = 3f;
+
 }
