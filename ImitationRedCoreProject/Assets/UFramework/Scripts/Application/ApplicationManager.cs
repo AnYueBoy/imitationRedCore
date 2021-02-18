@@ -69,7 +69,7 @@ namespace UFrameWork.Application {
             }
 
             this.inputManager.localUpdate ();
-            this.ballManager.localUpdate ();
+            this.ballManager.localUpdate (dt);
         }
 
         private void gameLateUpdate (float dt) {

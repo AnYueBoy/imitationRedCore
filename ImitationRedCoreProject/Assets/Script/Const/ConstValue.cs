@@ -14,4 +14,10 @@ public class ConstValue {
     /* 反射距离 */
     public const float reflectDis = 15f;
 
+    /* 箭头间距 */
+    public const float arrowInterval = 0.5f;
+
+    /* 小球移动速度 */
+    public const float ballMoveSpeed = 0f;
+
 }

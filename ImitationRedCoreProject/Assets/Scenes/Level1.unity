@@ -693,6 +693,7 @@ MonoBehaviour:
     m_Bits: 256
   ballParent: {fileID: 2039974312}
   currentBall: {fileID: 0}
+  arrowNodeList: []
   lineRenderer: {fileID: 1396811370}
 --- !u!4 &1396811369
 Transform:

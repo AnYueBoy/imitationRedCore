@@ -21,10 +21,10 @@ public class BallManager : MonoBehaviour {
     /* 产生的路径点 */
     private List<Vector3> generatePathList = new List<Vector3> ();
 
-    private readonly float moveSpeed = 1;
-
     [HideInInspector]
     public Ball currentBall = null;
+
+    public List<GameObject> arrowNodeList = new List<GameObject> ();
 
     /* 测试逻辑 */
     public LineRenderer lineRenderer = null;
@@ -36,39 +36,88 @@ public class BallManager : MonoBehaviour {
         ballNode.transform.position = new Vector3 (2.03f, 0, 0.235f);
         currentBall = ballNode.GetComponent<Ball> ();
 
+        // FIXME: 事件没有移除
         ListenerManager.instance.add (EventEnum.refreshPathList, this, this.refreshPathList);
     }
 
     private void refreshPathList () {
-        if (this.generatePathList.Count >= 0) {
-            this.curPathList = this.generatePathList;
-            this.pointIndex = 1;
+        if (this.generatePathList.Count <= 0) {
+            return;
         }
+
+        this.curPathList.Clear ();
+
+        foreach (Vector3 pathPos in this.generatePathList) {
+            this.curPathList.Add (pathPos);
+        }
+        this.pointIndex = 1;
     }
 
     private Vector3 preMoveDir = Vector3.zero;
 
-    public void localUpdate () {
+    public void localUpdate (float dt) {
+        this.autonomyGenPath ();
+        this.ballMove (dt);
+    }
+
+    private void autonomyGenPath () {
         if (InputManager.instance.isTouch && InputManager.instance.aimDir != preMoveDir) {
             this.preMoveDir = InputManager.instance.aimDir;
             this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
 
             this.lineRenderer.positionCount = this.generatePathList.Count;
             this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
-        }
 
-        move ();
+            this.recycleArrow ();
+
+            // 产生箭头
+            // this.generateArrow ();
+        }
+    }
+
+    private void recycleArrow () {
+        foreach (GameObject arrowNode in this.arrowNodeList) {
+            ObjectPool.instance.returnInstance (arrowNode);
+        }
+    }
+
+    private void generateArrow () {
+        GameObject arrowPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
+        for (int i = 0; i < this.generatePathList.Count - 1; i++) {
+            Vector3 startPathPos = this.generatePathList[i];
+            Vector3 nextPathPos = this.generatePathList[i + 1];
+
+            Vector3 diffVec = nextPathPos - startPathPos;
+            float totalDis = diffVec.magnitude;
+            Vector3 arrowDir = diffVec.normalized;
+            int intervalIndex = 0;
+
+            while (totalDis > 0) {
+                Vector3 endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
+                if (totalDis < ConstValue.arrowInterval) {
+                    endPos = startPathPos + arrowDir * (intervalIndex * (ConstValue.arrowInterval - 1) + totalDis);
+                }
+                intervalIndex++;
+                totalDis -= ConstValue.arrowInterval;
+                GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
+                this.arrowNodeList.Add (arrowNode);
+                float angle = Vector3.SignedAngle (Vector3.forward, arrowDir, Vector3.forward);
+
+                arrowNode.transform.parent = currentBall.arrowTransform;
+                arrowNode.transform.position = endPos;
+                arrowNode.transform.localEulerAngles = new Vector3 (0, 0, angle);
+            }
+        }
     }
 
     private int pointIndex = 1;
-    private void move () {
+    private void ballMove (float dt) {
         if (this.curPathList.Count <= 0) {
             return;
         }
 
         // 到达路径终点
         if (pointIndex >= this.curPathList.Count) {
-            Debug.Log ("Stop Here");
             return;
         }
 
@@ -80,13 +129,12 @@ public class BallManager : MonoBehaviour {
             pointIndex++;
             if (pointIndex >= this.curPathList.Count) {
                 // 重新产生路径
-                Debug.Log ("ReGenerate Points");
                 this.getReflectPath (targetDir, ConstValue.reflectDis, this.curPathList, this.layerMask);
                 this.pointIndex = 1;
             }
         }
 
-        currentBall.transform.Translate (targetDir * moveSpeed * Time.deltaTime);
+        currentBall.transform.Translate (targetDir * ConstValue.ballMoveSpeed * dt);
     }
 
     private void getReflectPath (Vector3 moveDir, float reflectDistance, List<Vector3> pathList, LayerMask layerMask) {
