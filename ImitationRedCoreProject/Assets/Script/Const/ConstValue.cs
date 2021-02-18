@@ -15,6 +15,6 @@ public class ConstValue {
     public const float reflectDis = 15f;
 
     /* 箭头间距 */
-    public const float arrowInterval = 15f;
+    public const float arrowInterval = 0.5f;
 
 }

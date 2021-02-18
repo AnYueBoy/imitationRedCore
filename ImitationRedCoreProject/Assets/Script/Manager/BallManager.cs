@@ -26,6 +26,8 @@ public class BallManager : MonoBehaviour {
     [HideInInspector]
     public Ball currentBall = null;
 
+    public List<GameObject> arrowNodeList = new List<GameObject> ();
+
     /* 测试逻辑 */
     public LineRenderer lineRenderer = null;
 
@@ -68,8 +70,16 @@ public class BallManager : MonoBehaviour {
             this.lineRenderer.positionCount = this.generatePathList.Count;
             this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
 
+            this.recycleArrow ();
+
             // 产生箭头
             this.generateArrow ();
+        }
+    }
+
+    private void recycleArrow () {
+        foreach (GameObject arrowNode in this.arrowNodeList) {
+            ObjectPool.instance.returnInstance (arrowNode);
         }
     }
 
@@ -93,6 +103,7 @@ public class BallManager : MonoBehaviour {
                 intervalIndex++;
                 totalDis -= ConstValue.arrowInterval;
                 GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
+                this.arrowNodeList.Add (arrowNode);
                 float angle = Vector3.Angle (Vector3.right, endPos);
 
                 arrowNode.transform.parent = currentBall.arrowTransform;
