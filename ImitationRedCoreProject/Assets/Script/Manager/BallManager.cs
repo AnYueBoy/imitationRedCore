@@ -15,13 +15,19 @@ public class BallManager : MonoBehaviour {
 
     public Transform ballParent = null;
 
-    /* 路径点 */
-    private List<Vector3> pathList = new List<Vector3> ();
+    /* 球行走路径点 */
+    private List<Vector3> curPathList = new List<Vector3> ();
+
+    /* 产生的路径点 */
+    private List<Vector3> generatePathList = new List<Vector3> ();
 
     private readonly float moveSpeed = 1;
 
     [HideInInspector]
     public Ball currentBall = null;
+
+    /* 测试逻辑 */
+    public LineRenderer lineRenderer = null;
 
     public void init () {
         GameObject ballPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.ballUrl);
@@ -29,33 +35,53 @@ public class BallManager : MonoBehaviour {
         ballNode.transform.SetParent (this.ballParent);
         ballNode.transform.position = new Vector3 (2.03f, 0, 0.235f);
         currentBall = ballNode.GetComponent<Ball> ();
+
+        ListenerManager.instance.add (EventEnum.refreshPathList, this, this.refreshPathList);
+    }
+
+    private void refreshPathList () {
+        if (this.generatePathList.Count >= 0) {
+            this.curPathList = this.generatePathList;
+            this.pointIndex = 1;
+        }
     }
 
     private Vector3 preMoveDir = Vector3.zero;
 
     public void localUpdate () {
-        if (InputManager.instance.isTouch && InputManager.instance.moveDir != preMoveDir) {
-            this.preMoveDir = InputManager.instance.moveDir;
-            this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.pathList, this.layerMask);
-            this.pointIndex = 1;
+        if (InputManager.instance.isTouch && InputManager.instance.aimDir != preMoveDir) {
+            this.preMoveDir = InputManager.instance.aimDir;
+            this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
+
+            this.lineRenderer.positionCount = this.generatePathList.Count;
+            this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
         }
+
         move ();
     }
 
     private int pointIndex = 1;
     private void move () {
-        if (pointIndex >= this.pathList.Count) {
+        if (this.curPathList.Count <= 0) {
             return;
         }
-        Vector3 targetPos = this.pathList[pointIndex];
+
+        // 到达路径终点
+        if (pointIndex >= this.curPathList.Count) {
+            Debug.Log ("Stop Here");
+            return;
+        }
+
+        Vector3 targetPos = this.curPathList[pointIndex];
         Vector3 targetVec = targetPos - currentBall.transform.position;
         Vector3 targetDir = targetVec.normalized;
 
-        if (targetVec.magnitude < 10) {
+        if (targetVec.magnitude < 0.3) {
             pointIndex++;
-            if (pointIndex >= this.pathList.Count) {
+            if (pointIndex >= this.curPathList.Count) {
                 // 重新产生路径
-                this.getReflectPath (targetDir, ConstValue.reflectDis, this.pathList, this.layerMask);
+                Debug.Log ("ReGenerate Points");
+                this.getReflectPath (targetDir, ConstValue.reflectDis, this.curPathList, this.layerMask);
                 this.pointIndex = 1;
             }
         }

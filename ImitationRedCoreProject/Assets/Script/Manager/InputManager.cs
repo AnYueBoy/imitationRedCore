@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.UI;
 public class InputManager : MonoBehaviour {
@@ -23,18 +24,17 @@ public class InputManager : MonoBehaviour {
 
     private static InputManager _instance = null;
 
-    private void Awake () {
+    public void init () {
         _instance = this;
+
+        this.halfScreenWidth = Screen.width / 2;
+        this.halfScreenHeight = Screen.height / 2;
     }
+
     public static InputManager instance {
         get {
             return _instance;
         }
-    }
-
-    public void init () {
-        this.halfScreenWidth = Screen.width / 2;
-        this.halfScreenHeight = Screen.height / 2;
     }
 
     public void localUpdate () {
@@ -112,6 +112,9 @@ public class InputManager : MonoBehaviour {
         this.touchStartPos = Vector2.zero;
         this.insideCircle.rectTransform.localPosition = Vector2.zero;
         this.outCircle.gameObject.SetActive (false);
+
+        // FIXME: 事件的触发方式，有待商榷
+        ListenerManager.instance.trigger (EventEnum.refreshPathList);
     }
 
     private void touchCancel () {
@@ -126,12 +129,23 @@ public class InputManager : MonoBehaviour {
         this.touchStartPos = Vector2.zero;
         this.insideCircle.rectTransform.localPosition = Vector2.zero;
         this.outCircle.gameObject.SetActive (false);
+
+        // FIXME: 事件的触发方式，有待商榷
+        ListenerManager.instance.trigger (EventEnum.refreshPathList);
     }
 
     public Vector3 moveDir {
         get {
             Vector3 moveDir = new Vector3 (this.curMoveDir.x, 0, this.curMoveDir.y);
             return moveDir.normalized;
+        }
+    }
+
+    public Vector3 aimDir {
+        get {
+            Vector3 aimDir = this.touchEndPos - this.touchStartPos;
+            aimDir = new Vector3 (aimDir.x, 0, aimDir.y);
+            return aimDir.normalized;
         }
     }
 
