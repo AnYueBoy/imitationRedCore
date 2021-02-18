@@ -36,6 +36,7 @@ public class BallManager : MonoBehaviour {
         ballNode.transform.position = new Vector3 (2.03f, 0, 0.235f);
         currentBall = ballNode.GetComponent<Ball> ();
 
+        // FIXME: 事件没有移除
         ListenerManager.instance.add (EventEnum.refreshPathList, this, this.refreshPathList);
     }
 
@@ -48,7 +49,12 @@ public class BallManager : MonoBehaviour {
 
     private Vector3 preMoveDir = Vector3.zero;
 
-    public void localUpdate () {
+    public void localUpdate (float dt) {
+        this.autonomyGenPath ();
+        this.ballMove (dt);
+    }
+
+    private void autonomyGenPath () {
         if (InputManager.instance.isTouch && InputManager.instance.aimDir != preMoveDir) {
             this.preMoveDir = InputManager.instance.aimDir;
             this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
@@ -56,19 +62,16 @@ public class BallManager : MonoBehaviour {
             this.lineRenderer.positionCount = this.generatePathList.Count;
             this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
         }
-
-        move ();
     }
 
     private int pointIndex = 1;
-    private void move () {
+    private void ballMove (float dt) {
         if (this.curPathList.Count <= 0) {
             return;
         }
 
         // 到达路径终点
         if (pointIndex >= this.curPathList.Count) {
-            Debug.Log ("Stop Here");
             return;
         }
 
@@ -86,7 +89,7 @@ public class BallManager : MonoBehaviour {
             }
         }
 
-        currentBall.transform.Translate (targetDir * moveSpeed * Time.deltaTime);
+        currentBall.transform.Translate (targetDir * moveSpeed * dt);
     }
 
     private void getReflectPath (Vector3 moveDir, float reflectDistance, List<Vector3> pathList, LayerMask layerMask) {
