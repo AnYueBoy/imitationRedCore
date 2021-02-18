@@ -41,10 +41,16 @@ public class BallManager : MonoBehaviour {
     }
 
     private void refreshPathList () {
-        if (this.generatePathList.Count >= 0) {
-            this.curPathList = this.generatePathList;
-            this.pointIndex = 1;
+        if (this.generatePathList.Count <= 0) {
+            return;
         }
+
+        this.curPathList.Clear ();
+
+        foreach (Vector3 pathPos in this.generatePathList) {
+            this.curPathList.Add (pathPos);
+        }
+        this.pointIndex = 1;
     }
 
     private Vector3 preMoveDir = Vector3.zero;
