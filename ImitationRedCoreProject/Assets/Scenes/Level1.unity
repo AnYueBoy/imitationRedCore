@@ -367,7 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e41a129ae109f4ea4ea82dc82d7308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTrans: {fileID: 0}
 --- !u!1001 &959684363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1131,6 +1130,7 @@ MonoBehaviour:
   appMode: 0
   cameraTrack: {fileID: 887411266}
   ballManager: {fileID: 1396811368}
+  inputManager: {fileID: 1956043513}
 --- !u!4 &1693263006
 Transform:
   m_ObjectHideFlags: 0

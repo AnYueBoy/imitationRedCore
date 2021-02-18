@@ -12,31 +12,71 @@ namespace UFrameWork.Application {
         public AppMode appMode = AppMode.Developing;
 
         private GUIConsole guiConsole = new GUIConsole ();
-
         public CameraTrack cameraTrack = null;
-
         public BallManager ballManager = null;
 
-        #region  程序生命周期函数
+        public InputManager inputManager = null;
 
-        private void Start () {
+        #region  程序生命周期函数
+        private void Awake () {
             appLaunch ();
         }
 
+        private void OnEnable () {
+
+        }
+
+        private void Start () {
+            this.gameStart ();
+        }
+
         private void Update () {
+            this.gameUpdate (Time.deltaTime);
+        }
+
+        private void LateUpdate () {
+            this.gameLateUpdate (Time.deltaTime);
+        }
+
+        private void OnGUI () {
+            this.gameOnGUI ();
+        }
+
+        #endregion
+
+        #region 启动与初始化
+
+        private void appLaunch () {
+            setResourceLoadType ();
+
+            if (appMode != AppMode.Release) {
+                // 图形控制面板初始化
+                guiConsole.init ();
+            }
+
+            this.inputManager.init ();
+
+            this.ballManager.init ();
+
+            this.cameraTrack.init (ballManager.currentBall.transform, Vector3.zero);
+        }
+
+        private void gameStart () { }
+
+        private void gameUpdate (float dt) {
             if (guiConsole != null) {
                 guiConsole.localUpdate ();
             }
 
-            InputManager.instance.localUpdate ();
-            ballManager.localUpdate ();
+            this.inputManager.localUpdate ();
+            this.ballManager.localUpdate ();
         }
 
-        private void LateUpdate () {
+        private void gameLateUpdate (float dt) {
             this.cameraTrack.localLateUpdate ();
         }
 
-        private void OnGUI () {
+        private void gameOnGUI () {
             if (guiConsole != null) {
                 guiConsole.drawGUI ();
             }
@@ -48,18 +88,11 @@ namespace UFrameWork.Application {
         }
         #endregion
 
-        private void appLaunch () {
-            if (appMode != AppMode.Release) {
-                // 图形控制面板初始化
-                guiConsole.init ();
-            }
-
-            InputManager.instance.init ();
-
-            ballManager.init ();
-
-            CameraTrack.instance.init (ballManager.currentBall.transform, Vector3.zero);
-            // 初始化
+        private void setResourceLoadType () {
+            // TODO: 资源加载方式
         }
+
+        public void hotUpdateCompleted () { }
+
     }
 }

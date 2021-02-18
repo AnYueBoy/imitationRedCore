@@ -23,18 +23,17 @@ public class InputManager : MonoBehaviour {
 
     private static InputManager _instance = null;
 
-    private void Awake () {
+    public void init () {
         _instance = this;
+
+        this.halfScreenWidth = Screen.width / 2;
+        this.halfScreenHeight = Screen.height / 2;
     }
+
     public static InputManager instance {
         get {
             return _instance;
         }
-    }
-
-    public void init () {
-        this.halfScreenWidth = Screen.width / 2;
-        this.halfScreenHeight = Screen.height / 2;
     }
 
     public void localUpdate () {
