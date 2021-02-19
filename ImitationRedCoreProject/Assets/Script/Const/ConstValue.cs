@@ -15,9 +15,15 @@ public class ConstValue {
     public const float reflectDis = 15f;
 
     /* 箭头间距 */
-    public const float arrowInterval = 0.5f;
+    public const float arrowInterval = 0.2f;
 
     /* 小球移动速度 */
-    public const float ballMoveSpeed = 0f;
+    public const float ballMoveSpeed = 3f;
+
+    /* 慢游戏速率 */
+    public const float slowGameSpeed = 0.2f;
+
+    /* 正常游戏速率 */
+    public const float normalGameSpeed = 1;
 
 }

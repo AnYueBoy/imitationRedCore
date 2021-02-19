@@ -59,6 +59,8 @@ namespace UFrameWork.Application {
             this.ballManager.init ();
 
             this.cameraTrack.init (ballManager.currentBall.transform, Vector3.zero);
+
+            DataManager.instance.init ();
         }
 
         private void gameStart () { }
@@ -69,7 +71,9 @@ namespace UFrameWork.Application {
             }
 
             this.inputManager.localUpdate ();
-            this.ballManager.localUpdate (dt);
+
+            float gameSpeed = DataManager.instance.inSideData.gameSpeed;
+            this.ballManager.localUpdate (dt * gameSpeed);
         }
 
         private void gameLateUpdate (float dt) {

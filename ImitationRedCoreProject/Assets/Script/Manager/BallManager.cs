@@ -24,10 +24,7 @@ public class BallManager : MonoBehaviour {
     [HideInInspector]
     public Ball currentBall = null;
 
-    public List<GameObject> arrowNodeList = new List<GameObject> ();
-
-    /* 测试逻辑 */
-    public LineRenderer lineRenderer = null;
+    private List<GameObject> arrowNodeList = new List<GameObject> ();
 
     public void init () {
         GameObject ballPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.ballUrl);
@@ -41,6 +38,9 @@ public class BallManager : MonoBehaviour {
     }
 
     private void refreshPathList () {
+        // 回收箭头
+        this.recycleArrow ();
+
         if (this.generatePathList.Count <= 0) {
             return;
         }
@@ -65,13 +65,10 @@ public class BallManager : MonoBehaviour {
             this.preMoveDir = InputManager.instance.aimDir;
             this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
 
-            this.lineRenderer.positionCount = this.generatePathList.Count;
-            this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
-
             this.recycleArrow ();
 
             // 产生箭头
-            // this.generateArrow ();
+            this.generateArrow ();
         }
     }
 
@@ -91,17 +88,22 @@ public class BallManager : MonoBehaviour {
             float totalDis = diffVec.magnitude;
             Vector3 arrowDir = diffVec.normalized;
             int intervalIndex = 0;
+            float angle = Vector3.Angle (Vector3.forward, arrowDir);
+            if (arrowDir.x > 0) {
+                angle = -angle;
+            }
+
+            Vector3 endPos = Vector3.zero;
 
             while (totalDis > 0) {
-                Vector3 endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
+                endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
                 if (totalDis < ConstValue.arrowInterval) {
-                    endPos = startPathPos + arrowDir * (intervalIndex * (ConstValue.arrowInterval - 1) + totalDis);
+                    endPos = startPathPos + arrowDir * ((intervalIndex - 1) * ConstValue.arrowInterval + totalDis);
                 }
                 intervalIndex++;
                 totalDis -= ConstValue.arrowInterval;
                 GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
                 this.arrowNodeList.Add (arrowNode);
-                float angle = Vector3.SignedAngle (Vector3.forward, arrowDir, Vector3.forward);
 
                 arrowNode.transform.parent = currentBall.arrowTransform;
                 arrowNode.transform.position = endPos;
