@@ -91,6 +91,10 @@ public class BallManager : MonoBehaviour {
             float totalDis = diffVec.magnitude;
             Vector3 arrowDir = diffVec.normalized;
             int intervalIndex = 0;
+            float angle = Vector3.Angle (Vector3.forward, arrowDir);
+            if (arrowDir.x > 0) {
+                angle = -angle;
+            }
 
             while (totalDis > 0) {
                 Vector3 endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
@@ -101,10 +105,6 @@ public class BallManager : MonoBehaviour {
                 totalDis -= ConstValue.arrowInterval;
                 GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
                 this.arrowNodeList.Add (arrowNode);
-                float angle = Vector3.Angle (Vector3.forward, arrowDir);
-                if (arrowDir.x > 0) {
-                    angle = -angle;
-                }
 
                 arrowNode.transform.parent = currentBall.arrowTransform;
                 arrowNode.transform.position = endPos;
