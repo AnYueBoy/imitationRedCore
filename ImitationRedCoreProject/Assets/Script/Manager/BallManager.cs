@@ -71,7 +71,7 @@ public class BallManager : MonoBehaviour {
             this.recycleArrow ();
 
             // 产生箭头
-            // this.generateArrow ();
+            this.generateArrow ();
         }
     }
 
@@ -101,7 +101,10 @@ public class BallManager : MonoBehaviour {
                 totalDis -= ConstValue.arrowInterval;
                 GameObject arrowNode = ObjectPool.instance.requestInstance (arrowPrefab);
                 this.arrowNodeList.Add (arrowNode);
-                float angle = Vector3.SignedAngle (Vector3.forward, arrowDir, Vector3.forward);
+                float angle = Vector3.Angle (Vector3.forward, arrowDir);
+                if (arrowDir.x > 0) {
+                    angle = -angle;
+                }
 
                 arrowNode.transform.parent = currentBall.arrowTransform;
                 arrowNode.transform.position = endPos;
