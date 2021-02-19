@@ -692,7 +692,6 @@ MonoBehaviour:
     m_Bits: 256
   ballParent: {fileID: 2039974312}
   currentBall: {fileID: 0}
-  arrowNodeList: []
 --- !u!4 &1396811369
 Transform:
   m_ObjectHideFlags: 0
@@ -821,7 +820,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0.21
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
