@@ -72,6 +72,9 @@ public class InputManager : MonoBehaviour {
         // 环坐标设置
         Vector2 circlePos = new Vector2 (this.touchStartPos.x - halfScreenWidth, this.touchStartPos.y - halfScreenHeight);
         this.outCircle.rectTransform.localPosition = circlePos;
+
+        // 游戏速率设置
+        DataManager.instance.inSideData.gameSpeed = ConstValue.slowGameSpeed;
     }
 
     private void touchMove (Touch touch) {
@@ -115,6 +118,9 @@ public class InputManager : MonoBehaviour {
 
         // FIXME: 事件的触发方式，有待商榷
         ListenerManager.instance.trigger (EventEnum.refreshPathList);
+
+        // 游戏速率恢复
+        DataManager.instance.inSideData.gameSpeed = ConstValue.normalGameSpeed;
     }
 
     private void touchCancel () {
@@ -132,13 +138,9 @@ public class InputManager : MonoBehaviour {
 
         // FIXME: 事件的触发方式，有待商榷
         ListenerManager.instance.trigger (EventEnum.refreshPathList);
-    }
 
-    public Vector3 moveDir {
-        get {
-            Vector3 moveDir = new Vector3 (this.curMoveDir.x, 0, this.curMoveDir.y);
-            return moveDir.normalized;
-        }
+        // 游戏速率恢复
+        DataManager.instance.inSideData.gameSpeed = ConstValue.normalGameSpeed;
     }
 
     public Vector3 aimDir {

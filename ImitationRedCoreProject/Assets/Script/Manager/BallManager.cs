@@ -24,10 +24,7 @@ public class BallManager : MonoBehaviour {
     [HideInInspector]
     public Ball currentBall = null;
 
-    public List<GameObject> arrowNodeList = new List<GameObject> ();
-
-    /* 测试逻辑 */
-    public LineRenderer lineRenderer = null;
+    private List<GameObject> arrowNodeList = new List<GameObject> ();
 
     public void init () {
         GameObject ballPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.ballUrl);
@@ -41,6 +38,9 @@ public class BallManager : MonoBehaviour {
     }
 
     private void refreshPathList () {
+        // 回收箭头
+        this.recycleArrow ();
+
         if (this.generatePathList.Count <= 0) {
             return;
         }
@@ -64,9 +64,6 @@ public class BallManager : MonoBehaviour {
         if (InputManager.instance.isTouch && InputManager.instance.aimDir != preMoveDir) {
             this.preMoveDir = InputManager.instance.aimDir;
             this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
-
-            this.lineRenderer.positionCount = this.generatePathList.Count;
-            this.lineRenderer.SetPositions (this.generatePathList.ToArray ());
 
             this.recycleArrow ();
 
