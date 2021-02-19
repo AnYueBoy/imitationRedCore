@@ -53,17 +53,14 @@ public class BallManager : MonoBehaviour {
         this.pointIndex = 1;
     }
 
-    private Vector3 preMoveDir = Vector3.zero;
-
     public void localUpdate (float dt) {
         this.autonomyGenPath ();
         this.ballMove (dt);
     }
 
     private void autonomyGenPath () {
-        if (InputManager.instance.isTouch && InputManager.instance.aimDir != preMoveDir) {
-            this.preMoveDir = InputManager.instance.aimDir;
-            this.getReflectPath (this.preMoveDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
+        if (InputManager.instance.isTouch) {
+            this.getReflectPath (InputManager.instance.aimDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
 
             this.recycleArrow ();
 
