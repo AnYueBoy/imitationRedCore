@@ -15,7 +15,7 @@ public class ConstValue {
     public const float reflectDis = 15f;
 
     /* 箭头间距 */
-    public const float arrowInterval = 0.5f;
+    public const float arrowInterval = 0.2f;
 
     /* 小球移动速度 */
     public const float ballMoveSpeed = 0f;
