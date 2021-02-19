@@ -96,10 +96,12 @@ public class BallManager : MonoBehaviour {
                 angle = -angle;
             }
 
+            Vector3 endPos = Vector3.zero;
+
             while (totalDis > 0) {
-                Vector3 endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
+                endPos = startPathPos + arrowDir * (intervalIndex * ConstValue.arrowInterval);
                 if (totalDis < ConstValue.arrowInterval) {
-                    endPos = startPathPos + arrowDir * (intervalIndex * (ConstValue.arrowInterval - 1) + totalDis);
+                    endPos = startPathPos + arrowDir * ((intervalIndex - 1) * ConstValue.arrowInterval + totalDis);
                 }
                 intervalIndex++;
                 totalDis -= ConstValue.arrowInterval;
