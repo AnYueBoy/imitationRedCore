@@ -11,6 +11,9 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour {
 
+    public static BallManager _instance;
+    
+
     public LayerMask layerMask;
 
     public Transform ballParent = null;
