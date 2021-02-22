@@ -28,7 +28,7 @@ public class BaseEnemy : MonoBehaviour {
         Vector3 targetVec = this.gameObject.transform.position - ballTrans.position;
         Vector3 targetDir = targetVec.normalized;
 
-        float angle = Vector3.Angle (Vector3.forward, targetDir);
+        float angle = Vector3.Angle (Vector3.back, targetDir);
         if (targetDir.x > 0) {
             angle = -angle;
         }
