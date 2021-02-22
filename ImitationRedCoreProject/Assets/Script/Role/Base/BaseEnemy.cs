@@ -9,11 +9,7 @@ using System.Collections.Generic;
 using UFrameWork.Application;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour {
-
-    protected void OnCollisionEnter (Collision other) {
-
-    }
+public class BaseEnemy : MonoBehaviour, IObstacle {
 
     protected float lockAtInterval = 0.5f;
 
@@ -35,4 +31,7 @@ public class BaseEnemy : MonoBehaviour {
         this.gameObject.transform.localEulerAngles = new Vector3 (0, angle, 0);
     }
 
+    public ItemType GetItemType () {
+        return ItemType.ENEMY;
+    }
 }

@@ -13,16 +13,16 @@ public class EnemyManager : MonoBehaviour, IModule {
 
     public Transform enemyParent;
 
-    private List<BaseEnemy> enemyList;
+    private HashSet<BaseEnemy> enemySet;
 
     public void init () {
-        enemyList = new List<BaseEnemy> ();
+        enemySet = new HashSet<BaseEnemy> ();
         // FIXME: 创建临时敌人
         this.spawnEnemy (EnemyType.SINGLE_CANNON, new Vector3 (0, 0, -8));
     }
 
     public void localUpdate (float dt) {
-        foreach (BaseEnemy enemy in enemyList) {
+        foreach (BaseEnemy enemy in enemySet) {
             if (enemy == null) {
                 continue;
             }
@@ -40,7 +40,14 @@ public class EnemyManager : MonoBehaviour, IModule {
         enemyNode.transform.localPosition = enemyPos;
 
         BaseEnemy enemy = enemyNode.GetComponent<BaseEnemy> ();
-        this.enemyList.Add (enemy);
+        this.enemySet.Add (enemy);
+    }
+
+    public void recycleEnemy (BaseEnemy enemy) {
+        if (this.enemySet.Contains (enemy)) {
+            ObjectPool.instance.returnInstance (enemy.transform.gameObject);
+            this.enemySet.Remove (enemy);
+        }
     }
 
     private string getEnemyUrlByType (EnemyType enemyType) {
