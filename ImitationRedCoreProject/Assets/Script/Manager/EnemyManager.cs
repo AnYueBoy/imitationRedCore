@@ -17,7 +17,8 @@ public class EnemyManager : MonoBehaviour, IModule {
 
     public void init () {
         enemyList = new List<BaseEnemy> ();
-        this.spawnEnemy (EnemyType.SINGLE_CANNON, new Vector3 (0, 0, -5));
+        // FIXME: 创建临时敌人
+        this.spawnEnemy (EnemyType.SINGLE_CANNON, new Vector3 (0, 0, -8));
     }
 
     public void localUpdate (float dt) {
