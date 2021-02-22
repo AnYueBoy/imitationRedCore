@@ -16,11 +16,14 @@ public class Ball : MonoBehaviour {
 
     public Transform arrowTransform = null;
 
-    private void OnCollisionEnter (Collision other) {
-        IObstacle obstacle = other.gameObject.GetComponent<IObstacle> ();
+    public void colliderEnter (IObstacle obstacle) {
+        if (obstacle == null) {
+            return;
+        }
         ItemType itemType = obstacle.GetItemType ();
         if (itemType == ItemType.ENEMY) {
             ModuleManager.instance.enemyManager.recycleEnemy (obstacle as BaseEnemy);
         }
     }
+
 }

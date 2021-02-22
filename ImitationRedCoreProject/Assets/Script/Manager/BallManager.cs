@@ -17,10 +17,10 @@ public class BallManager : MonoBehaviour, IModule {
     public Transform ballParent = null;
 
     /* 球行走路径点 */
-    private List<Vector3> curPathList = new List<Vector3> ();
+    private List<HitPointInfo> curPathList = new List<HitPointInfo> ();
 
     /* 产生的路径点 */
-    private List<Vector3> generatePathList = new List<Vector3> ();
+    private List<HitPointInfo> generatePathList = new List<HitPointInfo> ();
 
     [HideInInspector]
     public Ball currentBall = null;
@@ -48,8 +48,8 @@ public class BallManager : MonoBehaviour, IModule {
 
         this.curPathList.Clear ();
 
-        foreach (Vector3 pathPos in this.generatePathList) {
-            this.curPathList.Add (pathPos);
+        foreach (HitPointInfo hitPointInfo in this.generatePathList) {
+            this.curPathList.Add (hitPointInfo);
         }
         this.pointIndex = 1;
     }
@@ -79,8 +79,8 @@ public class BallManager : MonoBehaviour, IModule {
     private void generateArrow () {
         GameObject arrowPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
         for (int i = 0; i < this.generatePathList.Count - 1; i++) {
-            Vector3 startPathPos = this.generatePathList[i];
-            Vector3 nextPathPos = this.generatePathList[i + 1];
+            Vector3 startPathPos = this.generatePathList[i].hitPos;
+            Vector3 nextPathPos = this.generatePathList[i + 1].hitPos;
 
             Vector3 diffVec = nextPathPos - startPathPos;
             float totalDis = diffVec.magnitude;
@@ -121,12 +121,14 @@ public class BallManager : MonoBehaviour, IModule {
             return;
         }
 
-        Vector3 targetPos = this.curPathList[pointIndex];
+        HitPointInfo targetHitInfo = this.curPathList[pointIndex];
+        Vector3 targetPos = targetHitInfo.hitPos;
         Vector3 targetVec = targetPos - currentBall.transform.position;
         Vector3 targetDir = targetVec.normalized;
 
         if (targetVec.magnitude < 0.3) {
             pointIndex++;
+            this.currentBall.colliderEnter (targetHitInfo.hitObstacle);
             if (pointIndex >= this.curPathList.Count) {
                 // 重新产生路径
                 this.getReflectPath (targetDir, ConstValue.reflectDis, this.curPathList, this.layerMask);
@@ -137,17 +139,18 @@ public class BallManager : MonoBehaviour, IModule {
         currentBall.transform.Translate (targetDir * ConstValue.ballMoveSpeed * dt);
     }
 
-    private void getReflectPath (Vector3 moveDir, float reflectDistance, List<Vector3> pathList, LayerMask layerMask) {
+    private void getReflectPath (Vector3 moveDir, float reflectDistance, List<HitPointInfo> pathList, LayerMask layerMask) {
         pathList.Clear ();
         Vector3 startPos = currentBall.transform.position;
-        pathList.Add (startPos);
+        HitPointInfo startHitInfo = new HitPointInfo (startPos, null);
+        pathList.Add (startHitInfo);
         while (reflectDistance > 0) {
             RaycastHit raycastHit;
             if (!Physics.Raycast (startPos, moveDir, out raycastHit, reflectDistance, layerMask)) {
                 break;
             }
-
-            pathList.Add (raycastHit.point);
+            HitPointInfo hitPointInfo = new HitPointInfo (raycastHit.point, raycastHit.collider.GetComponent<IObstacle> ());
+            pathList.Add (hitPointInfo);
             reflectDistance -= (raycastHit.point - startPos).magnitude;
 
             startPos = raycastHit.point;
@@ -156,7 +159,8 @@ public class BallManager : MonoBehaviour, IModule {
 
         if (reflectDistance > 0) {
             Vector3 endPoint = startPos + moveDir * reflectDistance;
-            pathList.Add (endPoint);
+            HitPointInfo endHitInfo = new HitPointInfo (endPoint, null);
+            pathList.Add (endHitInfo);
         }
     }
 }
