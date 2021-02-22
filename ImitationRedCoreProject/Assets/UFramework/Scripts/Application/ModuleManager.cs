@@ -31,6 +31,9 @@ namespace UFrameWork.Application {
 
         [HideInInspector]
         public DataManager dataManager;
+
+        [HideInInspector]
+        public EnemyManager enemyManager;
         #endregion
 
         private void Awake () {
@@ -47,6 +50,9 @@ namespace UFrameWork.Application {
 
             dataManager = new DataManager ();
             dataManager.init ();
+
+            enemyManager = new EnemyManager ();
+            enemyManager.init ();
         }
 
         private void Update () {
@@ -57,10 +63,12 @@ namespace UFrameWork.Application {
             inputManager.localUpdate (dt);
 
             dataManager.localUpdate (dt);
-            ballManager.localUpdate (dt);
 
             float gameSpeed = dataManager.inSideData.gameSpeed;
-            cameraManager.localUpdate (dt * gameSpeed);
+
+            ballManager.localUpdate (dt * gameSpeed);
+            cameraManager.localUpdate (dt);
+            enemyManager.localUpdate (dt * gameSpeed);
         }
 
         private void LateUpdate () {

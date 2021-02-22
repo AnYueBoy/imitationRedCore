@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UFrameWork.Application;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour {
@@ -23,7 +24,8 @@ public class BaseEnemy : MonoBehaviour {
     }
 
     private void rotateToBall (float dt) {
-        // Vector3 targetVec = this.gameObject.transform.position - BallManager
+        Transform ballTrans = ModuleManager.instance.ballManager.currentBall.transform;
+        Vector3 targetVec = this.gameObject.transform.position - ballTrans.position;
         // float angle = Vector3.Angle (Vector3.forward, )
         this.gameObject.transform.localEulerAngles = new Vector3 ();
     }

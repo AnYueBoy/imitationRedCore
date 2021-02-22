@@ -5,9 +5,16 @@
  */
 
 using System.Collections.Generic;
-public class EnemyManager {
+using UFrameWork.Application;
 
-    private List<BaseEnemy> enemyList = new List<BaseEnemy> ();
+public class EnemyManager : IModule {
+
+    private List<BaseEnemy> enemyList;
+
+    public void init () {
+        enemyList = new List<BaseEnemy> ();
+    }
+
     public void localUpdate (float dt) {
         foreach (BaseEnemy enemy in enemyList) {
             if (enemy == null) {
