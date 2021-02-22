@@ -26,8 +26,13 @@ public class BaseEnemy : MonoBehaviour {
     private void rotateToBall (float dt) {
         Transform ballTrans = ModuleManager.instance.ballManager.currentBall.transform;
         Vector3 targetVec = this.gameObject.transform.position - ballTrans.position;
-        // float angle = Vector3.Angle (Vector3.forward, )
-        this.gameObject.transform.localEulerAngles = new Vector3 ();
+        Vector3 targetDir = targetVec.normalized;
+
+        float angle = Vector3.Angle (Vector3.forward, targetDir);
+        if (targetDir.x > 0) {
+            angle = -angle;
+        }
+        this.gameObject.transform.localEulerAngles = new Vector3 (0, angle, 0);
     }
 
 }
