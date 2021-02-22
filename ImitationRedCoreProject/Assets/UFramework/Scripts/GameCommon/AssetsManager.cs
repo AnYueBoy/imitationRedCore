@@ -4,27 +4,25 @@
  * @Date: 2020-10-10 06:56:04 
  * @Description: 资源访问的统一对外接口
  * @Last Modified by: l hy
- * @Last Modified time: 2021-01-21 22:05:33
+ * @Last Modified time: 2021-02-22 14:20:45
  */
 namespace UFramework.GameCommon {
 
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using UFrameWork.Application;
     using UnityEngine;
 
-    public class AssetsManager {
+    public class AssetsManager : IModule {
 
         private Dictionary<string, PackAsset> assetPool = new Dictionary<string, PackAsset> ();
 
-        private static AssetsManager _instance;
-        public static AssetsManager instance {
-            get {
-                if (_instance == null) {
-                    _instance = new AssetsManager ();
-                }
+        public void init () {
 
-                return _instance;
-            }
+        }
+
+        public void localUpdate (float dt) {
+
         }
 
         /// <summary>

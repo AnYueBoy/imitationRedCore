@@ -5,6 +5,7 @@
  */
 
 namespace UFrameWork.Application {
+    using UFramework.GameCommon;
     using UFrameWork.Develop;
     using UnityEngine;
     public class ModuleManager : MonoBehaviour {
@@ -22,6 +23,7 @@ namespace UFrameWork.Application {
         public InputManager inputManager;
         public BallManager ballManager;
         public CameraManager cameraManager;
+        public EnemyManager enemyManager;
 
         #endregion
 
@@ -30,10 +32,10 @@ namespace UFrameWork.Application {
         public GUIConsole guiConsole;
 
         [HideInInspector]
-        public DataManager dataManager;
+        public AssetsManager assetsManager;
 
         [HideInInspector]
-        public EnemyManager enemyManager;
+        public DataManager dataManager;
         #endregion
 
         private void Awake () {
@@ -44,6 +46,8 @@ namespace UFrameWork.Application {
                 guiConsole.init ();
             }
 
+            assetsManager = new AssetsManager ();
+
             inputManager.init ();
             ballManager.init ();
             cameraManager.init ();
@@ -51,7 +55,6 @@ namespace UFrameWork.Application {
             dataManager = new DataManager ();
             dataManager.init ();
 
-            enemyManager = new EnemyManager ();
             enemyManager.init ();
         }
 

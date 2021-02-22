@@ -20,7 +20,7 @@ public class BaseEnemy : MonoBehaviour {
     protected float shootInterval = 0.8f;
 
     public void localUpdate (float dt) {
-
+        this.rotateToBall (dt);
     }
 
     private void rotateToBall (float dt) {

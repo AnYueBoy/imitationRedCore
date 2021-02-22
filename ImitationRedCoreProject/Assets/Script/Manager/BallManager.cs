@@ -28,7 +28,7 @@ public class BallManager : MonoBehaviour, IModule {
     private List<GameObject> arrowNodeList = new List<GameObject> ();
 
     public void init () {
-        GameObject ballPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.ballUrl);
+        GameObject ballPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (AssetUrlEnum.ballUrl);
         GameObject ballNode = ObjectPool.instance.requestInstance (ballPrefab);
         ballNode.transform.SetParent (this.ballParent);
         ballNode.transform.position = new Vector3 (2.03f, 0, 0.235f);
@@ -77,7 +77,7 @@ public class BallManager : MonoBehaviour, IModule {
     }
 
     private void generateArrow () {
-        GameObject arrowPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
+        GameObject arrowPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (AssetUrlEnum.arrowUrl);
         for (int i = 0; i < this.generatePathList.Count - 1; i++) {
             Vector3 startPathPos = this.generatePathList[i];
             Vector3 nextPathPos = this.generatePathList[i + 1];

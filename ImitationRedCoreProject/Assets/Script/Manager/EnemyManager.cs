@@ -5,14 +5,19 @@
  */
 
 using System.Collections.Generic;
+using UFramework.GameCommon;
 using UFrameWork.Application;
+using UnityEngine;
 
-public class EnemyManager : IModule {
+public class EnemyManager : MonoBehaviour, IModule {
+
+    public Transform enemyParent;
 
     private List<BaseEnemy> enemyList;
 
     public void init () {
         enemyList = new List<BaseEnemy> ();
+        this.spawnEnemy (EnemyType.SINGLE_CANNON, new Vector3 (0, 0, -5));
     }
 
     public void localUpdate (float dt) {
@@ -22,6 +27,28 @@ public class EnemyManager : IModule {
             }
 
             enemy.localUpdate (dt);
+        }
+    }
+
+    public void spawnEnemy (EnemyType enemyType, Vector3 enemyPos) {
+        string assetUrl = this.getEnemyUrlByType (enemyType);
+        GameObject enemyPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (assetUrl);
+        GameObject enemyNode = ObjectPool.instance.requestInstance (enemyPrefab);
+        enemyNode.transform.parent = this.enemyParent;
+
+        enemyNode.transform.localPosition = enemyPos;
+
+        BaseEnemy enemy = enemyNode.GetComponent<BaseEnemy> ();
+        this.enemyList.Add (enemy);
+    }
+
+    private string getEnemyUrlByType (EnemyType enemyType) {
+        switch (enemyType) {
+            case EnemyType.SINGLE_CANNON:
+                return AssetUrlEnum.singleCannonUrl;
+            default:
+                Debug.LogError ("error enemyType: " + enemyType);
+                return "";
         }
     }
 
