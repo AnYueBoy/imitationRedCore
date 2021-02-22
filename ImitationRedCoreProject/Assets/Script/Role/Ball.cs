@@ -4,6 +4,7 @@
  * @Description: 球
  */
 
+using UFrameWork.Application;
 using UnityEngine;
 public class Ball : MonoBehaviour {
 
@@ -14,4 +15,15 @@ public class Ball : MonoBehaviour {
     }
 
     public Transform arrowTransform = null;
+
+    public void colliderEnter (IObstacle obstacle) {
+        if (obstacle == null) {
+            return;
+        }
+        ItemType itemType = obstacle.GetItemType ();
+        if (itemType == ItemType.ENEMY) {
+            ModuleManager.instance.enemyManager.recycleEnemy (obstacle as BaseEnemy);
+        }
+    }
+
 }

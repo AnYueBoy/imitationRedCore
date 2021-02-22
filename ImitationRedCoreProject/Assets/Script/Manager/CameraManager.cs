@@ -4,8 +4,9 @@
  * @Description: 相机跟踪
  */
 
+using UFrameWork.Application;
 using UnityEngine;
-public class CameraTrack : MonoBehaviour {
+public class CameraManager : MonoBehaviour, IModule {
 
     private Transform targetTrans = null;
 
@@ -13,26 +14,18 @@ public class CameraTrack : MonoBehaviour {
 
     private readonly float trackSpeed = 5.0f;
 
-    private static CameraTrack _instance = null;
-
-    private void Awake () {
-        _instance = this;
-    }
-
-    public static CameraTrack instance {
-        get {
-            return _instance;
-        }
-    }
-
-    public void init (Transform targetTrans, Vector3 cameraPos) {
-        this.targetTrans = targetTrans;
+    public void init () {
+        this.targetTrans = ModuleManager.instance.ballManager.currentBall.transform;
         // FIXME: 等待修改
         // this.transform.position = cameraPos;
         offset = this.transform.position - this.targetTrans.position;
     }
 
-    public void localLateUpdate () {
+    public void localUpdate (float dt) {
+
+    }
+
+    public void localLateUpdate (float dt) {
         if (!targetTrans) {
             return;
         }

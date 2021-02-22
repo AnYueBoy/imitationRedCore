@@ -4,11 +4,11 @@
  * @Description: 输入管理
  */
 
-using System.Collections.Generic;
 using UFramework.GameCommon;
+using UFrameWork.Application;
 using UnityEngine;
 using UnityEngine.UI;
-public class InputManager : MonoBehaviour {
+public class InputManager : MonoBehaviour, IModule {
     [Header ("外环")]
     public Image outCircle = null;
 
@@ -22,22 +22,12 @@ public class InputManager : MonoBehaviour {
     private float halfScreenWidth = 0;
     private float halfScreenHeight = 0;
 
-    private static InputManager _instance = null;
-
     public void init () {
-        _instance = this;
-
         this.halfScreenWidth = Screen.width / 2;
         this.halfScreenHeight = Screen.height / 2;
     }
 
-    public static InputManager instance {
-        get {
-            return _instance;
-        }
-    }
-
-    public void localUpdate () {
+    public void localUpdate (float dt) {
         this.checkTouch ();
     }
 
@@ -74,7 +64,7 @@ public class InputManager : MonoBehaviour {
         this.outCircle.rectTransform.localPosition = circlePos;
 
         // 游戏速率设置
-        DataManager.instance.inSideData.gameSpeed = ConstValue.slowGameSpeed;
+        ModuleManager.instance.dataManager.inSideData.gameSpeed = ConstValue.slowGameSpeed;
     }
 
     private void touchMove (Touch touch) {
@@ -120,7 +110,7 @@ public class InputManager : MonoBehaviour {
         ListenerManager.instance.trigger (EventEnum.refreshPathList);
 
         // 游戏速率恢复
-        DataManager.instance.inSideData.gameSpeed = ConstValue.normalGameSpeed;
+        ModuleManager.instance.dataManager.inSideData.gameSpeed = ConstValue.normalGameSpeed;
     }
 
     private void touchCancel () {
@@ -140,7 +130,7 @@ public class InputManager : MonoBehaviour {
         ListenerManager.instance.trigger (EventEnum.refreshPathList);
 
         // 游戏速率恢复
-        DataManager.instance.inSideData.gameSpeed = ConstValue.normalGameSpeed;
+        ModuleManager.instance.dataManager.inSideData.gameSpeed = ConstValue.normalGameSpeed;
     }
 
     public Vector3 aimDir {

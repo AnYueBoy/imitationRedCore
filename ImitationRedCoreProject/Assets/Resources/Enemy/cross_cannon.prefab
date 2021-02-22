@@ -175,12 +175,32 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 10c99ab2d93bbaf4ea376e877f057425,
         type: 3}
       propertyPath: m_Name
-      value: enemy_Four
+      value: cross_cannon
       objectReference: {fileID: 0}
     - target: {fileID: 4232459001169036900, guid: 10c99ab2d93bbaf4ea376e877f057425,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 27af44fad4e3b574a889dd13cbf07bf3, type: 2}
+    - target: {fileID: 9092420718870787162, guid: 10c99ab2d93bbaf4ea376e877f057425,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092420718870787162, guid: 10c99ab2d93bbaf4ea376e877f057425,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092420718870787162, guid: 10c99ab2d93bbaf4ea376e877f057425,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092420718870787162, guid: 10c99ab2d93bbaf4ea376e877f057425,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10c99ab2d93bbaf4ea376e877f057425, type: 3}

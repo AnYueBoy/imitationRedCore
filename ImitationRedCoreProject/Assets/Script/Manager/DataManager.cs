@@ -4,22 +4,17 @@
  * @Description: 数据管理
  */
 
-public class DataManager {
+using UFrameWork.Application;
 
-    private static DataManager _instance;
-
-    public static DataManager instance {
-        get {
-            if (_instance == null) {
-                _instance = new DataManager ();
-            }
-            return _instance;
-        }
-    }
+public class DataManager : IModule {
 
     public InSideData inSideData = null;
 
     public void init () {
         inSideData = new InSideData ();
+    }
+
+    public void localUpdate (float dt) {
+
     }
 }

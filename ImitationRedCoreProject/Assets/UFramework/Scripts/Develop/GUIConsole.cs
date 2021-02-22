@@ -5,9 +5,10 @@
  */
 namespace UFrameWork.Develop {
     using System.Collections.Generic;
+    using UFrameWork.Application;
     using UFrameWork.LogSystem;
     using UnityEngine;
-    public class GUIConsole {
+    public class GUIConsole : IModule {
 
         #region  信息组件
         /*帧率计算 */
@@ -35,7 +36,7 @@ namespace UFrameWork.Develop {
             Application.logMessageReceivedThreaded += handleLog;
         }
 
-        public void localUpdate () {
+        public void localUpdate (float dt) {
 #if UNITY_EDITOR
             if (Input.GetKeyUp (KeyCode.F1)) {
                 showGUI = !showGUI;

@@ -6,26 +6,32 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UFrameWork.Application;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour {
-
-    protected void OnCollisionEnter (Collision other) {
-
-    }
+public class BaseEnemy : MonoBehaviour, IObstacle {
 
     protected float lockAtInterval = 0.5f;
 
     protected float shootInterval = 0.8f;
 
     public void localUpdate (float dt) {
-
+        this.rotateToBall (dt);
     }
 
     private void rotateToBall (float dt) {
-        // Vector3 targetVec = this.gameObject.transform.position - BallManager
-        // float angle = Vector3.Angle (Vector3.forward, )
-        this.gameObject.transform.localEulerAngles = new Vector3 ();
+        Transform ballTrans = ModuleManager.instance.ballManager.currentBall.transform;
+        Vector3 targetVec = this.gameObject.transform.position - ballTrans.position;
+        Vector3 targetDir = targetVec.normalized;
+
+        float angle = Vector3.Angle (Vector3.back, targetDir);
+        if (targetDir.x > 0) {
+            angle = -angle;
+        }
+        this.gameObject.transform.localEulerAngles = new Vector3 (0, angle, 0);
     }
 
+    public ItemType GetItemType () {
+        return ItemType.ENEMY;
+    }
 }
