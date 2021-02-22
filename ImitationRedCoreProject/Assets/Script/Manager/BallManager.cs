@@ -7,12 +7,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UFramework.GameCommon;
+using UFrameWork.Application;
 using UnityEngine;
 
-public class BallManager : MonoBehaviour {
-
-    public static BallManager _instance;
-    
+public class BallManager : MonoBehaviour, IModule {
 
     public LayerMask layerMask;
 
@@ -62,8 +60,8 @@ public class BallManager : MonoBehaviour {
     }
 
     private void autonomyGenPath () {
-        if (InputManager.instance.isTouch) {
-            this.getReflectPath (InputManager.instance.aimDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
+        if (ModuleManager.instance.inputManager.isTouch) {
+            this.getReflectPath (ModuleManager.instance.inputManager.aimDir, ConstValue.reflectDis, this.generatePathList, this.layerMask);
 
             this.recycleArrow ();
 

@@ -589,7 +589,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 887411262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3e41a129ae109f4ea4ea82dc82d7308, type: 3}
+  m_Script: {fileID: 11500000, guid: fdfdb1125104de64e972f4af0ab29bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &910002855
@@ -1688,7 +1688,7 @@ GameObject:
   - component: {fileID: 1693263006}
   - component: {fileID: 1693263005}
   m_Layer: 0
-  m_Name: ApplicationManager
+  m_Name: ModuleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1703,13 +1703,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1693263004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21cbda4bea73114cbb3c61b2f7a919d, type: 3}
+  m_Script: {fileID: 11500000, guid: dbd6a7c63edac2c478e4cf4376101b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   appMode: 0
-  cameraTrack: {fileID: 887411266}
-  ballManager: {fileID: 1396811368}
   inputManager: {fileID: 1956043513}
+  ballManager: {fileID: 1396811368}
+  cameraManager: {fileID: 887411266}
 --- !u!4 &1693263006
 Transform:
   m_ObjectHideFlags: 0
