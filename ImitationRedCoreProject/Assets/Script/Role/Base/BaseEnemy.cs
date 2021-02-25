@@ -11,8 +11,6 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IObstacle {
 
-    protected float attackInterval = 3f;
-
     protected float attackTimer = 0;
 
     protected Material fillMaterial = null;
@@ -42,17 +40,22 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
 
     protected void attackCoolDown (float dt) {
         this.attackTimer += dt;
-        float fillValue = this.attackTimer / this.attackInterval;
+        float fillValue = this.attackTimer / ConstValue.attackInterval;
         this.refreshFill (fillValue);
-        if (this.attackTimer > this.attackInterval) {
+        if (this.attackTimer > ConstValue.attackInterval) {
             this.attackTimer = 0;
-            // TODO: 攻击逻辑
+            // 攻击
+            this.attackAction ();
         }
     }
 
     protected void refreshFill (float fillValue) {
         fillValue = Mathf.Min (fillValue, 1);
         this.fillMaterial.SetFloat ("_Fill", fillValue);
+    }
+
+    protected void attackAction () {
+
     }
 
     public ItemType GetItemType () {

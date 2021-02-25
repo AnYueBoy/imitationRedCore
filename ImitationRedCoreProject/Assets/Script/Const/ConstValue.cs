@@ -26,4 +26,7 @@ public class ConstValue {
     /* 正常游戏速率 */
     public const float normalGameSpeed = 1;
 
+    /* 攻击间隔 */
+    public const float attackInterval = 3f;
+
 }
