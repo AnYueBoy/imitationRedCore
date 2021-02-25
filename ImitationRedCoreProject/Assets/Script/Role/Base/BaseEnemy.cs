@@ -11,12 +11,21 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IObstacle {
 
-    protected float lockAtInterval = 0.5f;
+    protected float attackInterval = 3f;
 
-    protected float shootInterval = 0.8f;
+    protected float attackTimer = 0;
+
+    protected Material fillMaterial = null;
+
+    public SpriteRenderer fillNode = null;
+
+    public void init () {
+        this.fillMaterial = this.fillNode.material;
+    }
 
     public void localUpdate (float dt) {
         this.rotateToBall (dt);
+        this.attackCoolDown (dt);
     }
 
     private void rotateToBall (float dt) {
@@ -29,6 +38,21 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
             angle = -angle;
         }
         this.gameObject.transform.localEulerAngles = new Vector3 (0, angle, 0);
+    }
+
+    protected void attackCoolDown (float dt) {
+        this.attackTimer += dt;
+        float fillValue = this.attackTimer / this.attackInterval;
+        this.refreshFill (fillValue);
+        if (this.attackTimer > this.attackInterval) {
+            this.attackTimer = 0;
+            // TODO: 攻击逻辑
+        }
+    }
+
+    protected void refreshFill (float fillValue) {
+        fillValue = Mathf.Min (fillValue, 1);
+        this.fillMaterial.SetFloat ("_Fill", fillValue);
     }
 
     public ItemType GetItemType () {
