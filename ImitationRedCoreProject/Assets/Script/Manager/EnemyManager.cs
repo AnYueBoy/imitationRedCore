@@ -27,6 +27,10 @@ public class EnemyManager : MonoBehaviour, IModule {
                 continue;
             }
 
+            if (!enemy.gameObject.activeSelf) {
+                continue;
+            }
+
             enemy.localUpdate (dt);
         }
     }

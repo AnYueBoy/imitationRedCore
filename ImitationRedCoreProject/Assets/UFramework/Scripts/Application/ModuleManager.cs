@@ -36,6 +36,9 @@ namespace UFrameWork.Application {
 
         [HideInInspector]
         public DataManager dataManager;
+
+        [HideInInspector]
+        public BulletManager bulletManager;
         #endregion
 
         private void Awake () {
@@ -55,6 +58,9 @@ namespace UFrameWork.Application {
             dataManager = new DataManager ();
             dataManager.init ();
 
+            bulletManager = new BulletManager ();
+            bulletManager.init ();
+
             enemyManager.init ();
         }
 
@@ -72,6 +78,7 @@ namespace UFrameWork.Application {
             ballManager.localUpdate (dt * gameSpeed);
             cameraManager.localUpdate (dt);
             enemyManager.localUpdate (dt * gameSpeed);
+            bulletManager.localUpdate (dt);
         }
 
         private void LateUpdate () {

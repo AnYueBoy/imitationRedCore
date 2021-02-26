@@ -29,4 +29,10 @@ public class ConstValue {
     /* 攻击间隔 */
     public const float attackInterval = 3f;
 
+    /* 子弹速度 */
+    public const float bulletSpeed = 2f;
+
+    /* 子弹存在时间 */
+    public const float bulletExistTime = 3f;
+
 }

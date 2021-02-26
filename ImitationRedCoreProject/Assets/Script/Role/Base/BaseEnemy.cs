@@ -17,6 +17,8 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
 
     public SpriteRenderer fillNode = null;
 
+    public List<Transform> barrelList = new List<Transform> ();
+
     public void init () {
         this.fillMaterial = this.fillNode.material;
     }
@@ -55,7 +57,7 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
     }
 
     protected void attackAction () {
-
+        ModuleManager.instance.bulletManager.spawnBullet (this.barrelList);
     }
 
     public ItemType GetItemType () {
