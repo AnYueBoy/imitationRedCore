@@ -24,6 +24,7 @@ namespace UFrameWork.Application {
         public BallManager ballManager;
         public CameraManager cameraManager;
         public EnemyManager enemyManager;
+        public BulletManager bulletManager;
 
         #endregion
 
@@ -36,6 +37,8 @@ namespace UFrameWork.Application {
 
         [HideInInspector]
         public DataManager dataManager;
+
+        public GameManager gameManager;
         #endregion
 
         private void Awake () {
@@ -48,14 +51,8 @@ namespace UFrameWork.Application {
 
             assetsManager = new AssetsManager ();
 
-            inputManager.init ();
-            ballManager.init ();
-            cameraManager.init ();
-
-            dataManager = new DataManager ();
-            dataManager.init ();
-
-            enemyManager.init ();
+            gameManager = new GameManager ();
+            gameManager.init ();
         }
 
         private void Update () {
@@ -63,20 +60,13 @@ namespace UFrameWork.Application {
             if (guiConsole != null) {
                 guiConsole.localUpdate (dt);
             }
-            inputManager.localUpdate (dt);
-
-            dataManager.localUpdate (dt);
-
-            float gameSpeed = dataManager.inSideData.gameSpeed;
-
-            ballManager.localUpdate (dt * gameSpeed);
-            cameraManager.localUpdate (dt);
-            enemyManager.localUpdate (dt * gameSpeed);
+            gameManager.localUpdate (dt);
         }
 
         private void LateUpdate () {
             float dt = Time.deltaTime;
-            cameraManager.localLateUpdate (dt);
+            gameManager.localLateUpdate (dt);
+
         }
 
         private void OnGUI () {

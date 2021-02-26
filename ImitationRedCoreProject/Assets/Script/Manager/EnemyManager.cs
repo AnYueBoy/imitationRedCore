@@ -27,6 +27,10 @@ public class EnemyManager : MonoBehaviour, IModule {
                 continue;
             }
 
+            if (!enemy.gameObject.activeSelf) {
+                continue;
+            }
+
             enemy.localUpdate (dt);
         }
     }
@@ -40,6 +44,7 @@ public class EnemyManager : MonoBehaviour, IModule {
         enemyNode.transform.localPosition = enemyPos;
 
         BaseEnemy enemy = enemyNode.GetComponent<BaseEnemy> ();
+        enemy.init ();
         this.enemySet.Add (enemy);
     }
 

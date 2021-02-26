@@ -163,4 +163,8 @@ public class BallManager : MonoBehaviour, IModule {
             pathList.Add (endHitInfo);
         }
     }
+
+    public void recycleBall () {
+        ObjectPool.instance.returnInstance (this.currentBall.gameObject);
+    }
 }

@@ -11,12 +11,21 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IObstacle {
 
-    protected float lockAtInterval = 0.5f;
+    protected float attackTimer = 0;
 
-    protected float shootInterval = 0.8f;
+    protected Material fillMaterial = null;
+
+    public SpriteRenderer fillNode = null;
+
+    public List<Transform> barrelList = new List<Transform> ();
+
+    public void init () {
+        this.fillMaterial = this.fillNode.material;
+    }
 
     public void localUpdate (float dt) {
         this.rotateToBall (dt);
+        this.attackCoolDown (dt);
     }
 
     private void rotateToBall (float dt) {
@@ -29,6 +38,26 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
             angle = -angle;
         }
         this.gameObject.transform.localEulerAngles = new Vector3 (0, angle, 0);
+    }
+
+    protected void attackCoolDown (float dt) {
+        this.attackTimer += dt;
+        float fillValue = this.attackTimer / ConstValue.attackInterval;
+        this.refreshFill (fillValue);
+        if (this.attackTimer > ConstValue.attackInterval) {
+            this.attackTimer = 0;
+            // 攻击
+            this.attackAction ();
+        }
+    }
+
+    protected void refreshFill (float fillValue) {
+        fillValue = Mathf.Min (fillValue, 1);
+        this.fillMaterial.SetFloat ("_Fill", fillValue);
+    }
+
+    protected void attackAction () {
+        ModuleManager.instance.bulletManager.spawnBullet (this.barrelList);
     }
 
     public ItemType GetItemType () {

@@ -14,4 +14,7 @@ public class AssetUrlEnum {
 
     /* 单炮筒炮台资源路径 */
     public const string singleCannonUrl = "Enemy/Single_Cannon";
+
+    /* 子弹资源路径 */
+    public const string bulletUrl = "Enemy/Bullet";
 }
