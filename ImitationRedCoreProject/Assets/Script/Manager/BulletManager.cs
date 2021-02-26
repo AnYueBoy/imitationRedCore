@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using UFramework.GameCommon;
 using UFrameWork.Application;
 using UnityEngine;
-public class BulletManager : IModule {
+public class BulletManager : MonoBehaviour, IModule {
+
+    public Transform bulletParent;
 
     private HashSet<Bullet> bullets = new HashSet<Bullet> ();
 
@@ -34,10 +36,11 @@ public class BulletManager : IModule {
     public void spawnBullet (List<Transform> barrelTransList) {
         GameObject barrelPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (AssetUrlEnum.bulletUrl);
         foreach (Transform barrelTrans in barrelTransList) {
-            GameObject barrleNode = ObjectPool.instance.requestInstance (barrelPrefab);
-            barrleNode.transform.SetParent (barrelTrans);
-            barrleNode.transform.localPosition = Vector3.zero;
-            Bullet bullet = barrleNode.GetComponent<Bullet> ();
+            GameObject barrelNode = ObjectPool.instance.requestInstance (barrelPrefab);
+            Vector3 barrelWorldPos = barrelTrans.TransformPoint (Vector3.zero);
+            barrelNode.transform.SetParent (this.bulletParent);
+            barrelNode.transform.position = barrelWorldPos;
+            Bullet bullet = barrelNode.GetComponent<Bullet> ();
             bullets.Add (bullet);
         }
     }

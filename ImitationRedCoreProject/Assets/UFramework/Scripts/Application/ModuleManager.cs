@@ -24,6 +24,7 @@ namespace UFrameWork.Application {
         public BallManager ballManager;
         public CameraManager cameraManager;
         public EnemyManager enemyManager;
+        public BulletManager bulletManager;
 
         #endregion
 
@@ -36,9 +37,6 @@ namespace UFrameWork.Application {
 
         [HideInInspector]
         public DataManager dataManager;
-
-        [HideInInspector]
-        public BulletManager bulletManager;
 
         public GameManager gameManager;
         #endregion

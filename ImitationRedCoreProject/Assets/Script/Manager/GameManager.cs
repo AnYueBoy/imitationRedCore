@@ -14,7 +14,6 @@ public class GameManager : IModule {
         ModuleManager.instance.dataManager = new DataManager ();
         ModuleManager.instance.dataManager.init ();
 
-        ModuleManager.instance.bulletManager = new BulletManager ();
         ModuleManager.instance.bulletManager.init ();
 
         ModuleManager.instance.enemyManager.init ();
@@ -34,7 +33,7 @@ public class GameManager : IModule {
         ModuleManager.instance.ballManager.localUpdate (dt * gameSpeed);
         ModuleManager.instance.cameraManager.localUpdate (dt);
         ModuleManager.instance.enemyManager.localUpdate (dt * gameSpeed);
-        ModuleManager.instance.bulletManager.localUpdate (dt);
+        ModuleManager.instance.bulletManager.localUpdate (dt * gameSpeed);
     }
 
     public void localLateUpdate (float dt) {
