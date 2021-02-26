@@ -32,4 +32,16 @@ public class Bullet : MonoBehaviour, IObstacle {
 
         ObjectPool.instance.returnInstance (gameObject);
     }
+
+    private void OnCollisionEnter (Collision other) {
+        if (other == null) {
+            return;
+        }
+        Ball curBall = other.transform.GetComponent<Ball> ();
+        if (curBall == null) {
+            return;
+        }
+
+        // TODO: game over
+    }
 }
