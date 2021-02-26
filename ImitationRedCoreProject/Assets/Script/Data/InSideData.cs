@@ -11,6 +11,6 @@ public class InSideData {
         this.gameSpeed = ConstValue.normalGameSpeed;
 
         // FIXME: 临时状态为游戏中
-        this.curGameState = GameState.GAME_OVER;
+        this.curGameState = GameState.GAME_PROGRESSING;
     }
 }

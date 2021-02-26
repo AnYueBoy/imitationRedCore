@@ -53,6 +53,7 @@ namespace UFrameWork.Application {
 
             assetsManager = new AssetsManager ();
 
+            gameManager = new GameManager ();
             gameManager.init ();
         }
 

@@ -21,6 +21,10 @@ public class GameManager : IModule {
     }
 
     public void localUpdate (float dt) {
+        if (ModuleManager.instance.dataManager.inSideData.curGameState != GameState.GAME_PROGRESSING) {
+            return;
+        }
+
         ModuleManager.instance.inputManager.localUpdate (dt);
 
         ModuleManager.instance.dataManager.localUpdate (dt);

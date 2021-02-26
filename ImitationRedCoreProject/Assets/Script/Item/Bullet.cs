@@ -7,6 +7,7 @@
  */
 
 using UFramework.GameCommon;
+using UFrameWork.Application;
 using UnityEngine;
 public class Bullet : MonoBehaviour, IObstacle {
     public ItemType GetItemType () {
@@ -42,6 +43,9 @@ public class Bullet : MonoBehaviour, IObstacle {
             return;
         }
 
-        // TODO: game over
+        // game over
+        ModuleManager.instance.ballManager.recycleBall ();
+        ModuleManager.instance.dataManager.inSideData.curGameState = GameState.GAME_OVER;
     }
+
 }

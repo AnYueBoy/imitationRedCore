@@ -33,6 +33,6 @@ public class ConstValue {
     public const float bulletSpeed = 2f;
 
     /* 子弹存在时间 */
-    public const float bulletExistTime = 3f;
+    public const float bulletExistTime = 30f;
 
 }
