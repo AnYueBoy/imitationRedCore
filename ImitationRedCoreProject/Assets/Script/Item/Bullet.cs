@@ -14,13 +14,19 @@ public class Bullet : MonoBehaviour, IObstacle {
         return ItemType.BULLET;
     }
 
+    private Vector3 moveDir;
+
+    public void init (Vector3 dir) {
+        this.moveDir = dir;
+    }
+
     public void localUpdate (float dt) {
         this.move (dt);
         this.existTime (dt);
     }
 
     private void move (float dt) {
-        this.transform.Translate (Vector3.forward * dt * ConstValue.bulletSpeed);
+        this.transform.Translate (this.moveDir * dt * ConstValue.bulletSpeed);
     }
 
     private float existTimer = 0;

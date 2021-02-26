@@ -40,7 +40,11 @@ public class BulletManager : MonoBehaviour, IModule {
             Vector3 barrelWorldPos = barrelTrans.TransformPoint (Vector3.zero);
             barrelNode.transform.SetParent (this.bulletParent);
             barrelNode.transform.position = barrelWorldPos;
+            Vector3 curBallPos = ModuleManager.instance.ballManager.currentBall.transform.position;
+            Vector3 moveDir = new Vector3 (curBallPos.x, 0, curBallPos.z) - new Vector3 (barrelTrans.position.x, 0, barrelTrans.position.z);
             Bullet bullet = barrelNode.GetComponent<Bullet> ();
+            moveDir = moveDir.normalized;
+            bullet.init (moveDir);
             bullets.Add (bullet);
         }
     }
