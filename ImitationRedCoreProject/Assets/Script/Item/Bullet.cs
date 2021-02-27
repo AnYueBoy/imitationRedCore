@@ -3,7 +3,7 @@
  * @Date: 2021-02-26 07:36:39 
  * @Description: 子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-02-26 08:01:43
+ * @Last Modified time: 2021-02-27 14:05:25
  */
 
 using UFramework.GameCommon;
@@ -22,36 +22,27 @@ public class Bullet : MonoBehaviour, IObstacle {
 
     public void localUpdate (float dt) {
         this.move (dt);
-        this.existTime (dt);
     }
 
     private void move (float dt) {
         this.transform.Translate (this.moveDir * dt * ConstValue.bulletSpeed);
     }
 
-    private float existTimer = 0;
-
-    private void existTime (float dt) {
-        this.existTimer += dt;
-        if (existTimer < ConstValue.bulletExistTime) {
-            return;
-        }
-
-        ObjectPool.instance.returnInstance (gameObject);
-    }
-
-    private void OnCollisionEnter (Collision other) {
+    private void OnTriggerEnter (Collider other) {
         if (other == null) {
             return;
         }
-        Ball curBall = other.transform.GetComponent<Ball> ();
-        if (curBall == null) {
+        IObstacle obstacle = other.transform.GetComponent<IObstacle> ();
+        ItemType itemType = obstacle.GetItemType ();
+        if (itemType == ItemType.INDESTRUCTIBLE) {
+            ObjectPool.instance.returnInstance (gameObject);
             return;
         }
 
-        // game over
-        ModuleManager.instance.ballManager.recycleBall ();
-        ModuleManager.instance.dataManager.inSideData.curGameState = GameState.GAME_OVER;
+        if (itemType == ItemType.ENEMY) {
+            // game over
+            ModuleManager.instance.ballManager.recycleBall ();
+            ModuleManager.instance.dataManager.inSideData.curGameState = GameState.GAME_OVER;
+        }
     }
-
 }

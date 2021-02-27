@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour {
         if (itemType == ItemType.ENEMY) {
             BaseEnemy enemy = obstacle as BaseEnemy;
             enemy.die ();
-            // ModuleManager.instance.enemyManager.recycleEnemy (obstacle as BaseEnemy);
+            ModuleManager.instance.enemyManager.recycleEnemy (enemy);
         }
     }
 
