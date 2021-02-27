@@ -15,6 +15,10 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
 
     protected Material fillMaterial = null;
 
+    public Material exposionMaterial;
+
+    public MeshRenderer meshRenderer;
+
     public SpriteRenderer fillNode = null;
 
     public List<Transform> barrelList = new List<Transform> ();
@@ -62,5 +66,10 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
 
     public ItemType GetItemType () {
         return ItemType.ENEMY;
+    }
+
+    public void die () {
+        this.meshRenderer.material = this.exposionMaterial;
+        this.exposionMaterial.SetFloat ("_StartTime", Time.timeSinceLevelLoad);
     }
 }

@@ -22,7 +22,9 @@ public class Ball : MonoBehaviour {
         }
         ItemType itemType = obstacle.GetItemType ();
         if (itemType == ItemType.ENEMY) {
-            ModuleManager.instance.enemyManager.recycleEnemy (obstacle as BaseEnemy);
+            BaseEnemy enemy = obstacle as BaseEnemy;
+            enemy.die ();
+            // ModuleManager.instance.enemyManager.recycleEnemy (obstacle as BaseEnemy);
         }
     }
 
