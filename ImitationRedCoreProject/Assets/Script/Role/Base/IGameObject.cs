@@ -4,7 +4,7 @@
  * @Description: 障碍接口
  */
 
-public interface IObstacle {
+public interface IGameObject {
 
     ItemType GetItemType ();
 }

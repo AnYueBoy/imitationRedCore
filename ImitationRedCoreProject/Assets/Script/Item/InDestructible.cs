@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InDestructible : IObstacle {
+public class InDestructible : MonoBehaviour, IGameObject {
     public ItemType GetItemType () {
         return ItemType.INDESTRUCTIBLE;
     }

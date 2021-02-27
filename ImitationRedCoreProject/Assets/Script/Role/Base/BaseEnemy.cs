@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UFrameWork.Application;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour, IObstacle {
+public class BaseEnemy : MonoBehaviour, IGameObject {
 
     protected float attackTimer = 0;
 

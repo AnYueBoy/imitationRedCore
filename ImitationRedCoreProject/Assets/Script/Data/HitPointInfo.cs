@@ -8,9 +8,9 @@ public class HitPointInfo {
 
     public Vector3 hitPos;
 
-    public IObstacle hitObstacle;
+    public IGameObject hitObstacle;
 
-    public HitPointInfo (Vector3 hitPos, IObstacle hitObstacle) {
+    public HitPointInfo (Vector3 hitPos, IGameObject hitObstacle) {
         this.hitPos = hitPos;
         this.hitObstacle = hitObstacle;
     }
