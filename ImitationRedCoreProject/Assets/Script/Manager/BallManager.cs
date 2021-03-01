@@ -149,7 +149,7 @@ public class BallManager : MonoBehaviour, IModule {
             if (!Physics.Raycast (startPos, moveDir, out raycastHit, reflectDistance, layerMask)) {
                 break;
             }
-            HitPointInfo hitPointInfo = new HitPointInfo (raycastHit.point, raycastHit.collider.GetComponent<IObstacle> ());
+            HitPointInfo hitPointInfo = new HitPointInfo (raycastHit.point, raycastHit.collider.GetComponent<IGameObject> ());
             pathList.Add (hitPointInfo);
             reflectDistance -= (raycastHit.point - startPos).magnitude;
 

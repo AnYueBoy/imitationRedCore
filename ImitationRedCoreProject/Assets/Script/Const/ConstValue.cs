@@ -9,7 +9,7 @@ public class ConstValue {
     public const float joyStickMaxDis = 180.0f;
 
     /* 触发摇杆的最小距离 */
-    public const float moveMinDis = 100f;
+    public const float moveMinDis = 10f;
 
     /* 反射距离 */
     public const float reflectDis = 15f;
@@ -31,8 +31,4 @@ public class ConstValue {
 
     /* 子弹速度 */
     public const float bulletSpeed = 2f;
-
-    /* 子弹存在时间 */
-    public const float bulletExistTime = 30f;
-
 }

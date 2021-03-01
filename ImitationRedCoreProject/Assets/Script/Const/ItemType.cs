@@ -12,9 +12,12 @@ public enum ItemType {
     /* 子弹 */
     BULLET,
 
-    /* 可破坏物体 */
+    /* 可破坏物体墙面 */
     DESTRUCTIBLE,
 
-    /* 不可破坏物体 */
-    INDESTRUCTIBLE
+    /* 不可破坏物体墙面 */
+    INDESTRUCTIBLE,
+
+    /* 玩家球体 */
+    BALL,
 }

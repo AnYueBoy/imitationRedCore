@@ -9,15 +9,21 @@ using System.Collections.Generic;
 using UFrameWork.Application;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour, IObstacle {
+public class BaseEnemy : MonoBehaviour, IGameObject {
 
     protected float attackTimer = 0;
 
     protected Material fillMaterial = null;
 
+    public Material exposionMaterial;
+
+    public MeshRenderer meshRenderer;
+
     public SpriteRenderer fillNode = null;
 
     public List<Transform> barrelList = new List<Transform> ();
+
+    public bool isLookAtPlayer = true;
 
     public void init () {
         this.fillMaterial = this.fillNode.material;
@@ -29,6 +35,9 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
     }
 
     private void rotateToBall (float dt) {
+        if (!this.isLookAtPlayer) {
+            return;
+        }
         Transform ballTrans = ModuleManager.instance.ballManager.currentBall.transform;
         Vector3 targetVec = this.gameObject.transform.position - ballTrans.position;
         Vector3 targetDir = targetVec.normalized;
@@ -62,5 +71,13 @@ public class BaseEnemy : MonoBehaviour, IObstacle {
 
     public ItemType GetItemType () {
         return ItemType.ENEMY;
+    }
+
+    public void die () {
+        if (this.exposionMaterial == null) {
+            return;
+        }
+        this.meshRenderer.material = this.exposionMaterial;
+        this.exposionMaterial.SetFloat ("_StartTime", Time.timeSinceLevelLoad);
     }
 }

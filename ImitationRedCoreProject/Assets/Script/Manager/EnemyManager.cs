@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour, IModule {
         enemySet = new HashSet<BaseEnemy> ();
         // FIXME: 创建临时敌人
         this.spawnEnemy (EnemyType.SINGLE_CANNON, new Vector3 (0, 0, -8));
+        this.spawnEnemy (EnemyType.CROSS_CANNON, new Vector3 (0, 0, -3));
     }
 
     public void localUpdate (float dt) {
@@ -59,6 +60,9 @@ public class EnemyManager : MonoBehaviour, IModule {
         switch (enemyType) {
             case EnemyType.SINGLE_CANNON:
                 return AssetUrlEnum.singleCannonUrl;
+
+            case EnemyType.CROSS_CANNON:
+                return AssetUrlEnum.crossCannonUrl;
             default:
                 Debug.LogError ("error enemyType: " + enemyType);
                 return "";

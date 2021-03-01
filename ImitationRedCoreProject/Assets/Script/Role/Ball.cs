@@ -6,7 +6,7 @@
 
 using UFrameWork.Application;
 using UnityEngine;
-public class Ball : MonoBehaviour {
+public class Ball : MonoBehaviour, IGameObject {
 
     public Transform node {
         get {
@@ -16,14 +16,19 @@ public class Ball : MonoBehaviour {
 
     public Transform arrowTransform = null;
 
-    public void colliderEnter (IObstacle obstacle) {
+    public void colliderEnter (IGameObject obstacle) {
         if (obstacle == null) {
             return;
         }
         ItemType itemType = obstacle.GetItemType ();
         if (itemType == ItemType.ENEMY) {
-            ModuleManager.instance.enemyManager.recycleEnemy (obstacle as BaseEnemy);
+            BaseEnemy enemy = obstacle as BaseEnemy;
+            enemy.die ();
+            ModuleManager.instance.enemyManager.recycleEnemy (enemy);
         }
     }
 
+    public ItemType GetItemType () {
+        return ItemType.BALL;
+    }
 }
