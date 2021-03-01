@@ -5,5 +5,9 @@
  */
 public enum EnemyType {
 
+    /* 单炮台 */
     SINGLE_CANNON,
+
+    /* 四炮台 */
+    CROSS_CANNON
 }

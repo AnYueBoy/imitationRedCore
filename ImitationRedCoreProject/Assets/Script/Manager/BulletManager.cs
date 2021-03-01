@@ -34,17 +34,16 @@ public class BulletManager : MonoBehaviour, IModule {
     }
 
     public void spawnBullet (List<Transform> barrelTransList) {
-        GameObject barrelPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (AssetUrlEnum.bulletUrl);
+        GameObject bulletPrefab = ModuleManager.instance.assetsManager.getAssetByUrlSync<GameObject> (AssetUrlEnum.bulletUrl);
         foreach (Transform barrelTrans in barrelTransList) {
-            GameObject barrelNode = ObjectPool.instance.requestInstance (barrelPrefab);
-            Vector3 barrelWorldPos = barrelTrans.TransformPoint (Vector3.zero);
-            barrelNode.transform.SetParent (this.bulletParent);
-            barrelNode.transform.position = barrelWorldPos;
-            Vector3 curBallPos = ModuleManager.instance.ballManager.currentBall.transform.position;
-            Vector3 moveDir = new Vector3 (curBallPos.x, 0, curBallPos.z) - new Vector3 (barrelTrans.position.x, 0, barrelTrans.position.z);
-            Bullet bullet = barrelNode.GetComponent<Bullet> ();
-            moveDir = moveDir.normalized;
-            bullet.init (moveDir);
+            GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
+            Vector3 bulletWorldPos = barrelTrans.position;
+            Vector3 bulletWorldEuler = barrelTrans.eulerAngles;
+            bulletNode.transform.SetParent (this.bulletParent);
+            bulletNode.transform.position = bulletWorldPos;
+            bulletNode.transform.eulerAngles = bulletWorldEuler;
+
+            Bullet bullet = bulletNode.GetComponent<Bullet> ();
             bullets.Add (bullet);
         }
     }

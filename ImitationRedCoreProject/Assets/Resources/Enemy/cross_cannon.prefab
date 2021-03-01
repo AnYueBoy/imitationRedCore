@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4514425103997458698}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Customs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 357604929406039654}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,36 +143,6 @@ Transform:
   m_Father: {fileID: 4514425103997458698}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2407880335994536964
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 323301283230072600}
-  m_Layer: 0
-  m_Name: barrelTranRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &323301283230072600
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2407880335994536964}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.396, y: 0, z: 0.014}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2083394192208243674}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3406869121558582833
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6751303670101485438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: barrelTransDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7075594980866782024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: D_EnemyShooterQuadRot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 428410413889586762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cross_cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2856292666775071552}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: barrelTranLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2083394192208243674}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bareelList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +295,7 @@ Transform:
   - {fileID: 5449241394763767153}
   - {fileID: 6751303670101485438}
   - {fileID: 2856292666775071552}
-  - {fileID: 323301283230072600}
+  - {fileID: 2757241077290053956}
   m_Father: {fileID: 8293929919923957558}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -338,7 +308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2902043998320980274}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: xiaoguai_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5449241394763767153}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: barrelTranUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,6 +360,36 @@ Transform:
   m_Father: {fileID: 2083394192208243674}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6804448908547085796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2757241077290053956}
+  m_Layer: 8
+  m_Name: barrelTranRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2757241077290053956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804448908547085796}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.442, y: 0, z: 0.014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2083394192208243674}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &8293929919923957559
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,8 +400,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8293929919923957558}
   - component: {fileID: 8293929919923957557}
-  m_Layer: 0
-  m_Name: cross_cannon
+  - component: {fileID: 3311999407087782372}
+  m_Layer: 8
+  m_Name: Cross_Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,8 +444,21 @@ MonoBehaviour:
   - {fileID: 5449241394763767153}
   - {fileID: 6751303670101485438}
   - {fileID: 2856292666775071552}
-  - {fileID: 323301283230072600}
+  - {fileID: 2757241077290053956}
   isLookAtPlayer: 0
+--- !u!65 &3311999407087782372
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8293929919923957559}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.86748165, y: 0.5588224, z: 0.9041612}
+  m_Center: {x: 0.0031552017, y: -0.007550359, z: -0.0027893782}
 --- !u!1 &8936702059404661218
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +470,7 @@ GameObject:
   - component: {fileID: 6651298552784203873}
   - component: {fileID: 3304914441169552318}
   - component: {fileID: 8805670625658792756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: xiaoguai_Cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}

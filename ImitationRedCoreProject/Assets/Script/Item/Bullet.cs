@@ -14,18 +14,12 @@ public class Bullet : MonoBehaviour, IGameObject {
         return ItemType.BULLET;
     }
 
-    private Vector3 moveDir;
-
-    public void init (Vector3 dir) {
-        this.moveDir = dir;
-    }
-
     public void localUpdate (float dt) {
         this.move (dt);
     }
 
     private void move (float dt) {
-        this.transform.Translate (this.moveDir * dt * ConstValue.bulletSpeed);
+        this.transform.Translate (Vector3.forward * dt * ConstValue.bulletSpeed);
     }
 
     private void OnTriggerEnter (Collider other) {
